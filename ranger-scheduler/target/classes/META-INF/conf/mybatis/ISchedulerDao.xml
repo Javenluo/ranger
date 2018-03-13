@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.scheduler.dao.ISchedulerDao">
+	
+	<sql id="schedulerColumns">
+			c.job_name rwmc,
+			a.cron_expression sjbds,
+			b.job_class_name zylm,
+			c.trigger_state zt,
+			c.next_fire_time xczxsj,
+			case when c.prev_fire_time='-1' then null else c.prev_fire_time end as sczxsj,
+			<if test="dbName == 'oracle'">
+				TO_CHAR(c.next_fire_time / (1000 * 60 * 60 * 24) +  
+       				TO_DATE('1970-01-01 08:00:00', 'YYYY-MM-DD HH:MI:SS'), 'YYYY-MM-DD HH:MI:SS') AS xczxsjStr,
+       			case when c.prev_fire_time='-1' then null else TO_CHAR(c.prev_fire_time / (1000 * 60 * 60 * 24) +  
+       				TO_DATE('1970-01-01 08:00:00', 'YYYY-MM-DD HH:MI:SS'), 'YYYY-MM-DD HH:MI:SS') end as sczxsjStr,
+			</if>
+			<if test="dbName == 'mysql'">
+				FROM_UNIXTIME(c.next_fire_time/1000, '%Y-%m-%d %H:%i:%S') AS xczxsjStr,
+				case when c.prev_fire_time='-1' then null else FROM_UNIXTIME(c.prev_fire_time/1000, '%Y-%m-%d %H:%i:%S') end as sczxsjStr,
+			</if>
+		     c.description rwms 
+	</sql>
+	
+	<sql id="schedulerJoins">
+	</sql>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM QRTZ_TRIGGERS c,QRTZ_JOB_DETAILS b,QRTZ_CRON_TRIGGERS a
+		<include refid="schedulerJoins"/>
+		<where>
+			c.job_name=b.job_name
+		    and c.trigger_name=a.trigger_name
+		    <if test="rwmc!=null  and rwmc!=''">
+				AND c.job_name = #{rwmc}
+			</if>
+		</where>
+	</select>
+	
+	<select id="get" resultType="com.javenluo.ranger.scheduler.entity.SchedulerList">
+		SELECT 
+			<include refid="schedulerColumns"/>
+		FROM QRTZ_TRIGGERS c,QRTZ_JOB_DETAILS b,QRTZ_CRON_TRIGGERS a
+		<include refid="schedulerJoins"/>
+		<where>
+			c.job_name=b.job_name
+		    and c.trigger_name=a.trigger_name
+		    <if test="rwmc!=null and rwmc!=''">
+				AND c.job_name = #{rwmc}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.scheduler.entity.SchedulerList">
+		SELECT 
+			<include refid="schedulerColumns"/>
+		FROM QRTZ_TRIGGERS c,QRTZ_JOB_DETAILS b,QRTZ_CRON_TRIGGERS a
+		<include refid="schedulerJoins"/>
+		<where>
+			c.job_name=b.job_name
+		    and c.trigger_name=a.trigger_name
+		    <if test="rwmc!=null  and rwmc!=''">
+				AND c.job_name = #{rwmc}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="com.foresee.fbidp.sys.entity.SysLog">
+		SELECT 
+			<include refid="schedulerColumns"/>
+		FROM QRTZ_TRIGGERS c,QRTZ_JOB_DETAILS b,QRTZ_CRON_TRIGGERS a
+		<include refid="schedulerJoins"/>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fbidp_sys_log(
+				id ,
+				type ,
+				title ,
+				create_by ,
+				create_date ,
+				remote_addr ,
+				user_agent ,
+				request_uri ,
+				method ,
+				params ,
+				exception ,
+				description 
+			) values(
+    			#{id} , 
+	    		#{type} , 
+	    		#{title} , 
+	    		#{createBy} , 
+	    		#{createDate} , 
+	    		#{remoteAddr} , 
+	    		#{userAgent} , 
+	    		#{requestUri} , 
+	    		#{method} , 
+	    		#{params} , 
+	    		#{exception} ,
+	    		#{rwms}
+			)
+	</insert>
+	
+	<update id="update">
+		update fbidp_sys_log
+		<set>
+			type = #{type} ,
+			title = #{title} ,
+			remote_addr = #{remoteAddr} ,
+			user_agent = #{userAgent} ,
+			request_uri = #{requestUri} ,
+			method = #{method} ,
+			params = #{params} ,
+			exception = #{exception} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			description = #{rwms} 
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE fbidp_sys_log SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+
+</mapper>
+

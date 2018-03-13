@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ranger-web</artifactId>
+        <groupId>com.javenluo</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.javenluo</groupId>
+    <artifactId>ranger-web-sys</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.javenluo</groupId>
+            <artifactId>ranger-sys</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.javenluo</groupId>
+            <artifactId>ranger-rest-authorization</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.javenluo</groupId>
+            <artifactId>ranger-scheduler</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.javenluo</groupId>
+            <artifactId>ranger-web-common</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>ranger</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <overlays>
+                        <overlay>
+                            <groupId>com.javenluo</groupId>
+                            <artifactId>ranger-web-common</artifactId>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

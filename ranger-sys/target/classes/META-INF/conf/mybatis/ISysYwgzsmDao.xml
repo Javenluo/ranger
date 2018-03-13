@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysYwgzsmDao">
+	
+	<sql id="sysYwgzsmColumns">
+			a.ID as "id" , 
+				a.ywgz_bm as "ywgzBm" , 
+				a.ywgz_sm as "ywgzSm" , 
+				a.ywgz_sm_fwb as "ywgzSmFwb" , 
+				a.REMARKS as "remarks" , 
+				a.ENABLE_FLAG as "enableFlag" , 
+				a.DEL_FLAG as "delFlag" , 
+				a.CREATE_BY as "createBy" , 
+				a.CREATE_DATE as "createDate" , 
+				a.UPDATE_BY as "updateBy" , 
+			    a.UPDATE_DATE as "updateDate"
+	</sql>
+	
+	<sql id="sysYwgzsmJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysYwgzsm">
+		SELECT 
+			<include refid="sysYwgzsmColumns"/>
+		FROM fbidp_sys_ywgzsm a
+		<include refid="sysYwgzsmJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM fbidp_sys_ywgzsm a
+		<include refid="sysYwgzsmJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="ywgzBm!=null and ywgzBm!=''">
+				and	a.ywgz_bm=#{ywgzBm}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysYwgzsm">
+		SELECT 
+			<include refid="sysYwgzsmColumns"/>
+		FROM fbidp_sys_ywgzsm a
+		<include refid="sysYwgzsmJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="ywgzBm!=null and ywgzBm!=''">
+				and	a.ywgz_bm=#{ywgzBm}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysYwgzsm">
+		SELECT 
+			<include refid="sysYwgzsmColumns"/>
+		FROM fbidp_sys_ywgzsm a
+		<include refid="sysYwgzsmJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fbidp_sys_ywgzsm(
+			ID ,
+				ywgz_bm ,
+				ywgz_sm ,
+				ywgz_sm_fwb ,
+				REMARKS ,
+				ENABLE_FLAG ,
+				DEL_FLAG ,
+				CREATE_BY ,
+				CREATE_DATE ,
+				UPDATE_BY ,
+				UPDATE_DATE
+			) values(
+    		#{id} , 
+	    		#{ywgzBm} , 
+	    		#{ywgzSm} , 
+	    		#{ywgzSmFwb} , 
+	    		#{remarks} , 
+	    		#{enableFlag} , 
+	    		#{delFlag} , 
+	    		#{createBy} , 
+	    		#{createDate} , 
+	    		#{updateBy} , 
+	    		#{updateDate} 
+			)
+	</insert>
+	
+	<update id="update">
+		update fbidp_sys_ywgzsm
+		<set>
+			ywgz_bm = #{ywgzBm} ,
+			ywgz_sm = #{ywgzSm} ,
+			ywgz_sm_fwb = #{ywgzSmFwb} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE fbidp_sys_ywgzsm SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+
+	<select id="checkYwgzBm" resultType="java.lang.Integer">
+		select count(1) from fbidp_sys_ywgzsm 
+		<where>
+			<if test="ywgzBm!=null and ywgzBm!=''">
+				ywgz_bm = #{ywgzBm}
+			</if>
+		</where>
+	</select>
+</mapper>
+

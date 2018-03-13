@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysBmfzrDao">
+	
+	<sql id="sysBmfzrColumns">
+		a.ID as "id" , 
+		a.UNITNAME as "unitname" , 
+		a.UNITCODE as "unitcode" , 
+		a.BUMENNAME as "bumenname" , 
+		a.BUMENCODE as "bumencode" , 
+		a.LEADERCODE as "leadercode" , 
+		a.LEADERNAME as "leadername" , 
+		a.TENANT_ID as "tenantId" , 
+		a.REMARKS as "remarks" , 
+		a.ENABLE_FLAG as "enableFlag" , 
+		a.DEL_FLAG as "delFlag" , 
+		a.CREATE_BY as "createBy" , 
+		a.CREATE_DATE as "createDate" , 
+		a.UPDATE_BY as "updateBy" , 
+	    a.UPDATE_DATE as "updateDate"
+	</sql>
+	
+	<sql id="sysBmfzrJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysBmfzr">
+		SELECT 
+			<include refid="sysBmfzrColumns"/>
+		FROM FBIDP_SYS_BMFZR a
+		<include refid="sysBmfzrJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM FBIDP_SYS_BMFZR a
+		<include refid="sysBmfzrJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysBmfzr">
+		SELECT 
+			<include refid="sysBmfzrColumns"/>
+		FROM FBIDP_SYS_BMFZR a
+		<include refid="sysBmfzrJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+	</select>
+	
+	<select id="queryBmfzrList" resultType="com.javenluo.ranger.sys.entity.SysBmfzr">
+		SELECT 
+			<include refid="sysBmfzrColumns"/>
+		FROM FBIDP_SYS_BMFZR a
+		<include refid="sysBmfzrJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			and a.BUMENCODE = #{bumencode}
+			<if test="bumenname!=null and bumenname!=''">
+				and t1.bumenname=#{bumenname}
+			</if>
+			<if test="unitcode!=null and unitcode!=''">
+				and t1.unitcode=#{unitcode}
+			</if>
+			<if test="unitname!=null and unitname!=''">
+				and t1.unitname=#{unitname}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysBmfzr">
+		SELECT 
+			<include refid="sysBmfzrColumns"/>
+		FROM FBIDP_SYS_BMFZR a
+		<include refid="sysBmfzrJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO FBIDP_SYS_BMFZR(
+			ID ,
+			UNITNAME ,
+			UNITCODE ,
+			BUMENNAME ,
+			BUMENCODE ,
+			LEADERCODE ,
+			LEADERNAME ,
+			TENANT_ID ,
+			REMARKS ,
+			ENABLE_FLAG ,
+			DEL_FLAG ,
+			CREATE_BY ,
+			CREATE_DATE ,
+			UPDATE_BY ,
+			UPDATE_DATE
+		) values(
+			#{id} , 
+			#{unitname} , 
+			#{unitcode} , 
+			#{bumenname} , 
+			#{bumencode} , 
+			#{leadercode} , 
+			#{leadername} , 
+			#{tenantId} , 
+			#{remarks} , 
+			#{enableFlag} , 
+			#{delFlag} , 
+			#{createBy} , 
+			#{createDate} , 
+			#{updateBy} , 
+			#{updateDate} 
+		)
+	</insert>
+	
+	<update id="update">
+		update FBIDP_SYS_BMFZR
+		<set>
+			UNITNAME = #{unitname} ,
+			UNITCODE = #{unitcode} ,
+			BUMENNAME = #{bumenname} ,
+			BUMENCODE = #{bumencode} ,
+			LEADERCODE = #{leadercode} ,
+			LEADERNAME = #{leadername} ,
+			TENANT_ID = #{tenantId} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE FBIDP_SYS_BMFZR SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+
+</mapper>
+

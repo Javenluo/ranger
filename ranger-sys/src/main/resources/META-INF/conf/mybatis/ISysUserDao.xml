@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysUserDao">
+	
+	<sql id="sysUserColumns">
+		a.ID as "id", 
+		a.NAME as "name", 
+		a.IDNO as "idNumber", 
+		a.BIRTHDAY as "birthday", 
+		a.SEX as "sex", 
+		a.OFFICEPHONE as "tel", 
+		a.MOBILE as "mobileTel", 
+		a.EMAIL as "email", 
+		a.LOGIN_ID as "loginId", 
+		a.PASSWD as "passwd", 
+		a.LASTLOGIN as "lastLoginTime", 
+		a.REMARKS as "remarks", 
+		a.ENABLE_FLAG as "enableFlag", 
+		a.DEL_FLAG as "delFlag", 
+		a.CREATE_BY as "createBy", 
+		a.CREATE_DATE as "createDate", 
+		a.UPDATE_BY as "updateBy", 
+		a.UPDATE_DATE as "updateDate",
+		a.ORG_ID as "orgId",
+		org.org_code as "orgCode",
+		org.org_name as "orgName",
+		org.PARENT_ORG_CODE as "parentOrgCode",
+		org.full_org_codes as "fullOrgCodes",
+		org.full_org_names as "fullOrgNames",
+		a.SHOWORDER as "showOrder" ,
+		a.BMFZR as "bmfzr",
+		b.passwd
+	</sql>
+	
+	<sql id="sysUserJoins">
+		inner join fbidp_sys_org org on a.org_id=org.id
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT 
+			<include refid="sysUserColumns"/>
+		FROM Fbidp_sys_user a
+		left join fbidp_sys_login b on a.login_id = b.login_id
+		<include refid="sysUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="id != null and id !='' ">
+					and a.id = #{id}
+			</if>
+			<if test="loginId != null and loginId !='' ">
+					and a.LOGIN_ID like
+				<if test="dbName == 'oracle'">#{loginId}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{loginId}, '%')</if>
+			</if>
+			<if test="orgCode != null and orgCode !='' ">
+					and org.org_code = #{orgCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM Fbidp_sys_user a
+		<include refid="sysUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.id != '1'
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				and org.FULL_ORG_CODES like 
+				<if test="dbName == 'oracle'">#{fullOrgCodes}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{fullOrgCodes}, '%')</if>
+			</if>
+			<if test="loginId != null and loginId !='' ">
+				and a.LOGIN_ID like
+				<if test="dbName == 'oracle'">#{loginId}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{loginId}, '%')</if>
+			</if>
+			<if test="name != null and name !='' ">
+				and a.NAME like
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%',#{name}, '%')</if>
+			</if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT 
+			<include refid="sysUserColumns"/>
+		FROM Fbidp_sys_user a
+		left join fbidp_sys_login b on a.login_id = b.login_id
+		<include refid="sysUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.id != '1'
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				and org.FULL_ORG_CODES like 
+				<if test="dbName == 'oracle'">'%'||#{fullOrgCodes}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{fullOrgCodes}, '%')</if>
+			</if>
+			<if test="loginId != null and loginId !='' ">
+				and a.LOGIN_ID like
+				<if test="dbName == 'oracle'">#{loginId}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{loginId}, '%')</if>
+			</if>
+			<if test="orgCode != null and orgCode !='' ">
+				and org.org_code = #{orgCode}
+			</if>
+			<if test="orgId != null and orgId !='' ">
+				and a.org_id = #{orgId}
+			</if>
+			<if test="fullOrgIds != null and fullOrgIds !='' ">
+				and org.full_org_ids like
+			   	<if test="dbName == 'oracle'">'%'||#{fullOrgIds}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{fullOrgIds}, '%')</if>
+			</if>
+			<if test="name != null and name !='' ">
+				and a.NAME like
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%',#{name}, '%')</if>
+			</if>
+		</where>
+		order by a.showorder,a.login_id
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT 
+			<include refid="sysUserColumns"/>
+		FROM Fbidp_sys_user a
+		left join fbidp_sys_login b on a.login_id = b.login_id
+		<include refid="sysUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL} and a.id != '1'
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				and org.FULL_ORG_CODES like 
+				<if test="dbName == 'oracle'">#{fullOrgCodes}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{fullOrgCodes}, '%')</if>
+			</if>
+			<if test="loginId != null and loginId !='' ">
+				and a.LOGIN_ID like
+				<if test="dbName == 'oracle'">#{loginId}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{loginId}, '%')</if>
+			</if>
+			<if test="name != null and name !='' ">
+				and a.NAME like
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%',#{name}, '%')</if>
+			</if>
+		</where>
+		order by a.SHOWORDER
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO Fbidp_sys_user(
+			ID , 
+			NAME , 
+			IDNO , 
+			BIRTHDAY , 
+			SEX , 
+			OFFICEPHONE , 
+			MOBILE , 
+			EMAIL , 
+			LOGIN_ID , 
+			PASSWD , 
+			ORG_ID,
+			SHOWORDER,
+			LASTLOGIN , 
+			ENABLE_FLAG , 
+			DEL_FLAG , 
+			CREATE_BY , 
+			CREATE_DATE , 
+			UPDATE_BY , 
+			UPDATE_DATE , 
+			REMARKS ,
+			BMFZR 
+		) values(
+			#{id} , 
+			#{name} , 
+			#{idNumber} , 
+			#{birthday} , 
+			#{sex} , 
+			#{tel} , 
+			#{mobileTel} , 
+			#{email} , 
+			#{loginId} , 
+			#{passwd} , 
+			#{orgId} , 
+			#{showOrder},
+			#{lastLoginTime} , 
+			#{enableFlag} , 
+			#{delFlag} , 
+			#{createBy} , 
+			#{createDate} , 
+			#{updateBy} , 
+			#{updateDate} , 
+			#{remarks} ,
+			#{bmfzr} 
+		)
+	</insert>
+	
+	<update id="update">
+		update Fbidp_sys_user
+		<set>
+			NAME = #{name} ,
+			IDNO = #{idNumber} ,
+			BIRTHDAY = #{birthday} ,
+			SEX = #{sex} ,
+			OFFICEPHONE = #{tel} ,
+			MOBILE = #{mobileTel} ,
+			EMAIL = #{email} ,
+			ORG_ID = #{orgId},
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			SHOWORDER = #{showOrder},
+			ENABLE_FLAG = #{enableFlag},
+			BMFZR = #{bmfzr}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE Fbidp_sys_user SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+	<!-- 根据登录名查询用户 -->
+	<select id="getByLoginName" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT 
+			<include refid="sysUserColumns"/>
+		FROM Fbidp_sys_user a
+		left join fbidp_sys_login b on a.login_id = b.login_id
+		<include refid="sysUserJoins"/>
+		WHERE a.LOGIN_ID = #{loginId} and a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+	<!-- 根据登录名查询用户 -->
+	<select id="getByLoginId" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT 
+			<include refid="sysUserColumns"/>
+		FROM Fbidp_sys_user a
+		left join fbidp_sys_login b on a.login_id = b.login_id
+		<include refid="sysUserJoins"/>
+		WHERE a.LOGIN_ID = #{loginId} and a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	
+	<!-- 更新用户信息  -->
+	<update id="updateUserInfo">
+		UPDATE Fbidp_sys_user SET 
+			xm = #{name},
+			DZYX = #{email}, 
+			SJHM = #{mobile}, 
+			update_by = #{updateBy}, 
+			update_date = #{updateDate}, 
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 更新登录信息，如登录IP、登录时间 -->
+	<update id="updateLoginInfo">
+		UPDATE Fbidp_sys_user SET 
+			LASTLOGIP = #{loginIp}, 
+			LASTLOGIN = #{lastLoginTime} 
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 插入用户和角色关联表数据 -->
+	<insert id="insertUserRole">
+		INSERT INTO Fbidp_sys_user_role(user_id, role_id)
+		<foreach collection="roleList" item="role" separator=" union all ">
+			SELECT #{id}, #{role.id}
+			<if test="dbName != 'mssql'">
+			FROM dual
+			</if>
+		</foreach>
+	</insert>
+	
+	<!-- 删除用户和角色关联表数据 -->
+	<delete id="deleteUserRole">
+		DELETE FROM Fbidp_sys_user_role WHERE user_id = #{id}
+	</delete>
+	
+	<!-- 根据OfficeId获取用户（树查询用户时用） -->
+	<select id="findUserByOrgId" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT
+			a.id, a.name, a.login_id
+		FROM sys_user a
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.ORG_ID = #{office.id}
+		ORDER BY a.name
+	</select>
+	
+	<!-- 外部系统注册修改时根据longId 修改用户名 -->
+	<update id="updateName">
+		UPDATE Fbidp_sys_user SET 
+			NAME = #{name} 
+		WHERE LOGIN_ID = #{loginId} 
+	</update>
+
+	<!-- 根据机构Code获取人员信息 -->
+	<select id="findUserByOrgCode" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT 
+			<include refid="sysUserColumns"/>
+		FROM Fbidp_sys_user a 
+		left join fbidp_sys_login b on a.login_id = b.login_id
+		<include refid="sysUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="orgCode != null and orgCode !='' ">
+				and org.org_code = #{orgCode}
+			</if>
+		</where>
+	</select>
+	
+	
+	<insert id="insertBmfzr">
+		INSERT INTO FBIDP_SYS_BMFZR(
+			ID , 
+			UNITNAME , 
+			UNITCODE , 
+			Bumenname , 
+			Bumencode , 
+			Leadercode , 
+			Leadername 
+			
+		) values(
+			#{id} , 
+			#{unitname} , 
+			#{unitcode} , 
+			#{bumenname} , 
+			#{bumencode} , 
+			#{leadercode} ,
+			#{leadername}  
+		)
+	</insert>
+	<select id="findBmfzr" resultType="com.javenluo.ranger.sys.entity.SysBmfzr">
+		select * from FBIDP_SYS_BMFZR t
+		<where>
+			t.LEADERCODE = #{leadercode}
+		</where>
+	</select>
+	
+	<!-- 删除部门负责人 -->
+	<update id="deleteBmfzr">
+		UPDATE FBIDP_SYS_BMFZR SET 
+			DEL_FLAG = '1'  
+		WHERE LEADERCODE = #{loginId} 
+		and Bumencode = #{bumencode}
+	</update>
+	
+	<!-- 校验用户重复 -->
+	<select id="userCount" resultType="java.lang.Long">
+		select count(1)
+		  from fbidp_sys_user t
+		 where del_flag = #{DEL_FLAG_NORMAL}
+		   and t.login_id = #{loginId}
+		   <if test="orgId != null and orgId != ''">
+		   and t.org_id = #{orgId}
+		   </if>
+		   <if test="id != null and id != ''">
+		   and t.id != #{id}
+		   </if>
+	</select>
+	
+</mapper>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ranger-common-security" />
+        <module name="ranger-comon-ssm" />
+        <module name="ranger-rest-authorization" />
+        <module name="ranger-scheduler" />
+        <module name="ranger-sys" />
+        <module name="ranger-web-common" />
+        <module name="ranger-web-sys" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ranger" target="1.8" />
+      <module name="ranger-common" target="1.8" />
+      <module name="ranger-common-security" target="1.8" />
+      <module name="ranger-comon-ssm" target="1.8" />
+      <module name="ranger-rest" target="1.8" />
+      <module name="ranger-rest-authorization" target="1.8" />
+      <module name="ranger-scheduler" target="1.8" />
+      <module name="ranger-sys" target="1.8" />
+      <module name="ranger-web" target="1.8" />
+      <module name="ranger-web-common" target="1.8" />
+      <module name="ranger-web-sys" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

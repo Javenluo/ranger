@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>时间框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <meta name="generator" content="www.leipi.org" />
+    <!--<link rel="stylesheet" href="bootstrap/css/bootstrap.css">-->
+    <link href="../../layui/css/layui.css" rel="stylesheet" type="text/css">
+     <style>
+    	.label-important{
+    		color: red;
+    	}
+    </style>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" href="leipi.style.css">
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script type="text/javascript">
+function createElement(type, name)
+{     
+    var element = null;     
+    try {        
+        element = document.createElement('<'+type+' name="'+name+'">');     
+    } catch (e) {}   
+    if(element==null) {     
+        element = document.createElement(type);     
+        element.name = name;     
+    } 
+    return element;     
+}
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table layui-table">
+     <thead>
+     	<tr>
+	        <th width="50%"><span>控件名称</span><span class="label label-important">*</span></th>
+	        <th><span>时间类型</span> </th>
+	    </tr>
+     </thead>
+    <tr>
+        <td><input type="text" class="layui-input" id="orgname" placeholder="必填项"></td>
+        <td class="layui-form">
+            <select id="orgvalue" class="span7">
+            	<option value="">--  请选择  --</option>
+                <option value="year">当前年份 [ 1997 ]</option>
+                <option value="month">当前日期 [ 1997-1 ]</option>
+                <option value="date">当前日期 [ 1997-1-1 ]</option>
+                <option value="time">当前时间 [ 12:30:30 ]</option>
+                <option value="datetime">日期时间[ 1997-1-1 12:30:30 ]</option>
+            </select>
+        </td>
+    </tr>
+    <thead>
+    	<tr>
+	        <th><span>&nbsp;&nbsp;&nbsp;&nbsp;长&nbsp;&nbsp;X&nbsp;&nbsp;宽&nbsp;&nbsp;&nbsp;&&nbsp;&nbsp;&nbsp;字体大小</span> </th>
+	    </tr>
+    </thead>
+    <tr>
+        <td>
+            <input id="orgwidth" class="layui-input" style="display: inline-block;width: 20%;" type="text" value="150" class="input-small span1" placeholder="auto"/>
+            X
+            <input id="orgheight" class="layui-input" style="display: inline-block;width: 20%;" type="text" value="" class="input-small span1" placeholder="auto"/>
+            &
+            <input id="orgfontsize" class="layui-input" style="display: inline-block;width: 20%;" type="text"  value="" class="input-small span1" placeholder="auto"/> px
+        </td>
+    </tr>
+    </table>
+</div>
+<script src="../../layui/layui.js"></script>
+<script>
+	//一般直接写在一个js文件中
+	layui.use(['form','jquery','element','laydate'], function(){
+		form = layui.form;
+		$= layui.jquery;
+		element = layui.element;
+		laydate = layui.laydate;
+	
+		
+	});
+</script> 
+
+<script type="text/javascript">
+var oNode = null,thePlugins = 'timetext';
+window.onload = function() {
+    if( UE.plugins[thePlugins].editdom ){
+        oNode = UE.plugins[thePlugins].editdom;
+        oNode.setAttribute('class','layui-input');
+		var gValue = '';
+		if(oNode.getAttribute('value'))
+			gValue = oNode.getAttribute('value').replace(/&quot;/g,"\"");
+		var gTitle=oNode.getAttribute('title').replace(/&quot;/g,"\""),gFontSize=oNode.getAttribute('orgfontsize'),gWidth=oNode.getAttribute('orgwidth'),gHeight=oNode.getAttribute('orgheight');
+		gValue = gValue==null ? '' : gValue;
+        gTitle = gTitle==null ? '' : gTitle;
+        document.getElementById("orgvalue").value = oNode.getAttribute('orgvalue');
+        document.getElementById("orgname").value = oNode.getAttribute('id');
+        
+        form.render();
+		$G('orgvalue').value = gValue;
+        $G('orgname').value = gTitle;
+        
+        $G('orgfontsize').value = gFontSize;
+        $G('orgwidth').value = gWidth;
+        $G('orgheight').value = gHeight;
+    }
+}
+dialog.oncancel = function () {
+    if( UE.plugins[thePlugins].editdom ) {
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+dialog.onok = function (){
+    if($G('orgname').value==''){
+        alert('请输入控件名称');
+        return false;
+    }
+    var gValue=$G('orgvalue').value.replace(/\"/g,"&quot;"),gTitle=$G('orgname').value.replace(/\"/g,"&quot;"),gFontSize=$G('orgfontsize').value,gWidth=$G('orgwidth').value,gHeight=$G('orgheight').value;
+    
+    if( !oNode ) {
+        try {
+            oNode = createElement('input','leipiNewField');
+            oNode.setAttribute('type','text');
+            oNode.setAttribute('title',gTitle);
+            oNode.setAttribute('orgvalue',gValue);
+            oNode.setAttribute('value','时间控件');
+            oNode.setAttribute('class','layui-input');
+            oNode.setAttribute('name','leipiNewField');
+            oNode.setAttribute('id',gTitle);
+            oNode.setAttribute('leipiPlugins',thePlugins);
+            if( gFontSize != '' ) {
+                oNode.style.fontSize = gFontSize + 'px';
+                //style += 'font-size:' + gFontSize + 'px;';
+                oNode.setAttribute('orgfontsize',gFontSize );
+            }
+            if( gWidth != '' ) {
+                oNode.style.width = gWidth+ 'px';
+                //style += 'width:' + gWidth + 'px;';
+                oNode.setAttribute('orgwidth',gWidth );
+            }
+            if( gHeight != '' ) {
+                oNode.style.height = gHeight+ 'px';
+                //style += 'height:' + gHeight + 'px;';
+                oNode.setAttribute('orgheight',gHeight );
+            }
+            //oNode.setAttribute('style',style );
+            //oNode.style.cssText=style;//ie7
+            
+            editor.execCommand('insertHtml',oNode.outerHTML);
+        } catch (e) {
+            try {
+                editor.execCommand('error');
+            } catch ( e ) {
+                alert('控件异常，请到 [雷劈网] 反馈或寻求帮助！');
+            }
+            return false;
+        }
+    } else {
+        
+        oNode.setAttribute('title', gTitle);
+        oNode.setAttribute('value', '时间控件');
+        oNode.setAttribute('orgvalue', $G('orgvalue').value);
+        oNode.setAttribute('class','layui-input');
+        oNode.setAttribute('id',gTitle);
+        if( gFontSize != '' ) {
+            oNode.style.fontSize = gFontSize+ 'px';
+            oNode.setAttribute('orgfontsize',gFontSize );
+        }else{
+            oNode.style.fontSize = '';
+            oNode.setAttribute('orgfontsize', '');
+        }
+        if( gWidth != '' ) {
+            oNode.style.width = gWidth+ 'px';
+            oNode.setAttribute('orgwidth',gWidth );
+        }else{
+            oNode.style.width = '';
+            oNode.setAttribute('orgwidth', '');
+        }
+        if( gHeight != '' ) {
+            oNode.style.height = gHeight+ 'px';
+            oNode.setAttribute('orgheight',gHeight );
+        }else{
+            oNode.style.height = '';
+            oNode.setAttribute('orgheight', '');
+        }
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+</script>
+</body>
+</html>

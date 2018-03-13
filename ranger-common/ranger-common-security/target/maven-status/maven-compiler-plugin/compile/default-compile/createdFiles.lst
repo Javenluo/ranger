@@ -1,0 +1,6 @@
+com\javenluo\ranger\common\security\shiro\cache\SessionCacheManager.class
+com\javenluo\ranger\common\security\shiro\session\CacheSessionDAO.class
+com\javenluo\ranger\common\security\shiro\session\SessionManager.class
+com\javenluo\ranger\common\security\shiro\session\SessionDAO.class
+com\javenluo\ranger\common\security\shiro\cache\SessionCacheManager$SessionCache.class
+com\javenluo\ranger\common\security\shiro\HasAnyPermissionsTag.class

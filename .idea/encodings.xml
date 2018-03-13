@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-common/ranger-common-security" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-common/ranger-comon-ssm" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-rest" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-rest/ranger-rest-authorization" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-scheduler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-sys" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-sys" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-sys" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-web" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-web/ranger-web-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ranger-web/ranger-web-sys" charset="UTF-8" />
+  </component>
+</project>

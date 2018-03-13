@@ -1,0 +1,13 @@
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\manager\impl\RedisTokenManager.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\annotation\Authorization.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\dao\ISysTokenDao.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\annotation\CurrentUser.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\manager\impl\DataBaseTokenManagerService.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\manager\impl\AbstractTokenManager.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\resolvers\CurrentUserMethodArgumentResolver.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\interceptor\AuthorizationInterceptor.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\exception\MethodNotSupportException.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\entity\ResponeResult.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\authorization\manager\TokenManager.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\entity\SysToken.java
+C:\work\teamwork\ranger\ranger-rest\ranger-rest-authorization\src\main\java\com\javaluo\ranger\rest\web\TokenController.java

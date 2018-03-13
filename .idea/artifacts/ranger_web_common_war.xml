@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ranger-web-common:war">
+    <output-path>$PROJECT_DIR$/ranger-web/ranger-web-common/target</output-path>
+    <root id="archive" name="ranger-web-common.war">
+      <element id="artifact" artifact-name="ranger-web-common:war exploded" />
+    </root>
+  </artifact>
+</component>

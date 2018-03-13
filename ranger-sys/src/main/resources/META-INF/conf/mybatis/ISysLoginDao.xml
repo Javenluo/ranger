@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysLoginDao">
+	
+	<sql id="sysLoginColumns">
+		a.ID as "id" , 
+		a.LOGIN_ID as "loginId" , 
+		a.PASSWD as "passwd" , 
+		a.REMARKS as "remarks" , 
+		a.ENABLE_FLAG as "enableFlag" , 
+		a.DEL_FLAG as "delFlag" , 
+		a.CREATE_BY as "createBy" , 
+		a.CREATE_DATE as "createDate" , 
+		a.UPDATE_BY as "updateBy" , 
+	    a.UPDATE_DATE as "updateDate"
+	</sql>
+	
+	<sql id="sysLoginJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysLogin">
+		SELECT 
+			<include refid="sysLoginColumns"/>
+		FROM FBIDP_SYS_LOGIN a
+		<include refid="sysLoginJoins"/>
+		<where>
+			<if test="id !=null and id !=''">
+			and a.id = #{id}
+			</if>
+			<if test="loginId !=null and loginId !=''">
+			and a.login_id = #{loginId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM FBIDP_SYS_LOGIN a
+		<include refid="sysLoginJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysLogin">
+		SELECT 
+			<include refid="sysLoginColumns"/>
+		FROM FBIDP_SYS_LOGIN a
+		<include refid="sysLoginJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysLogin">
+		SELECT 
+			<include refid="sysLoginColumns"/>
+		FROM FBIDP_SYS_LOGIN a
+		<include refid="sysLoginJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO FBIDP_SYS_LOGIN(
+			ID ,
+			LOGIN_ID ,
+			PASSWD ,
+			REMARKS ,
+			ENABLE_FLAG ,
+			DEL_FLAG ,
+			CREATE_BY ,
+			CREATE_DATE ,
+			UPDATE_BY ,
+			UPDATE_DATE
+		) values(
+			#{id} , 
+			#{loginId} , 
+			#{passwd} , 
+			#{remarks} , 
+			#{enableFlag} , 
+			#{delFlag} , 
+			#{createBy} , 
+			#{createDate} , 
+			#{updateBy} , 
+			#{updateDate} 
+		)
+	</insert>
+	
+	<update id="update">
+		update FBIDP_SYS_LOGIN
+		<set>
+			LOGIN_ID = #{loginId} ,
+			PASSWD = #{passwd} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE FBIDP_SYS_LOGIN SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+	<!-- 更新用户密码 -->
+	<update id="updatePasswordById">
+		UPDATE FBIDP_SYS_LOGIN SET 
+			PASSWD = #{passwd} 
+		WHERE LOGIN_ID = #{loginId}
+	</update>
+	
+	<!-- 根据登录名查询用户 -->
+	<select id="getByLoginName" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT 
+			<include refid="sysLoginColumns"/>
+		FROM Fbidp_sys_login a
+		<include refid="sysLoginJoins"/>
+		WHERE a.LOGIN_ID = #{loginId} and a.del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+
+</mapper>
+

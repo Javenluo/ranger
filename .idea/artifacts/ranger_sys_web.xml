@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ranger-sys-web">
+    <output-path>$PROJECT_DIR$/out/artifacts/ranger_sys_web</output-path>
+    <root id="archive" name="ranger-sys-web.war" />
+  </artifact>
+</component>

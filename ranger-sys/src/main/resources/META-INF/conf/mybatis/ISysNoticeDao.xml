@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysNoticeDao">
+	
+	<sql id="sysNoticeColumns">
+		a.ID as "id" , 
+		a.NOTICE_TITLE as "noticeTitle" , 
+		a.NOTICE_TYPE as "noticeType" , 
+		a.VALID_DATE as "validDate" , 
+		a.VALID_FLAG as "validFlag" , 
+		a.CONTENT as "content" , 
+		a.CONTACT_ID as "contactId" , 
+		a.REMARKS as "remarks" , 
+		a.CHECKED as "checked" , 
+		a.CREATE_BY as "createBy" , 
+		a.CREATE_DATE as "createDate" , 
+		a.UPDATE_BY as "updateBy" , 
+	    a.UPDATE_DATE as "updateDate"
+	</sql>
+	
+	<sql id="sysNoticeJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysNotice">
+		SELECT 
+			<include refid="sysNoticeColumns"/>
+		FROM FBIDP_SYS_NOTICE a
+		<include refid="sysNoticeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM FBIDP_SYS_NOTICE a
+		<include refid="sysNoticeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="noticeTitle!=null and noticeTitle!=''">
+				and a.NOTICE_TITLE like '%'||#{noticeTitle}||'%'
+			</if>
+			<if test="noticeType!=null and noticeType!=''">
+				and a.NOTICE_TYPE =#{noticeType}
+			</if>
+			<if test="validDate!=null and validDate!=''">
+				and a.VALID_DATE =#{validDate}
+			</if>
+			<if test="validFlag!=null and validFlag!=''">
+				and a.VALID_FLAG =#{validFlag}
+			</if>
+			<if test="content!=null and content!=''">
+				and a.CONTENT =#{content}
+			</if>
+			<if test="checked!=null and checked!=''">
+				and a.CHECKED =#{checked}
+			</if>
+			<if test="createBy!=null and createBy!=''">
+				and a.CREATE_BY  like '%'||#{createBy}||'%'
+			</if>
+			<if test="fqsjq != null and fqsjq !=''">
+	            AND  to_char(a.CREATE_DATE,'yyyy-MM-dd')>=substr(#{fqsjq},0,4)||'-'||substr(#{fqsjq},5,2)||'-'||substr(#{fqsjq},7,2)
+	        </if>
+	        <if test="fqsjz != null and fqsjz !=''">
+	            AND to_char(a.CREATE_DATE,'yyyy-MM-dd')<![CDATA[<=]]> substr(#{fqsjz},0,4)||'-'||substr(#{fqsjz},5,2)||'-'||substr(#{fqsjz},7,2)
+	        </if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysNotice">
+		SELECT 
+			<include refid="sysNoticeColumns"/>
+		FROM FBIDP_SYS_NOTICE a
+		<include refid="sysNoticeJoins"/>
+			<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="noticeTitle!=null and noticeTitle!=''">
+				and a.NOTICE_TITLE like '%'||#{noticeTitle}||'%'
+			</if>
+			<if test="noticeType!=null and noticeType!=''">
+				and a.NOTICE_TYPE =#{noticeType}
+			</if>
+			<if test="validDate!=null and validDate!=''">
+				and a.VALID_DATE =#{validDate}
+			</if>
+			<if test="validFlag!=null and validFlag!=''">
+				and a.VALID_FLAG =#{validFlag}
+			</if>
+			<if test="content!=null and content!=''">
+				and a.CONTENT =#{content}
+			</if>
+			<if test="contactId!=null and contactId!=''">
+				and a.CONTACT_ID =#{contactId}
+			</if>
+			<if test="checked!=null and checked!=''">
+				and a.CHECKED =#{checked}
+			</if>
+			<if test="createBy!=null and createBy!=''">
+				and a.CREATE_BY  like '%'||#{createBy}||'%'
+			</if>
+			<if test="fqsjq != null and fqsjq !=''">
+	            AND to_char(a.CREATE_DATE,'yyyy-MM-dd')>=substr(#{fqsjq},0,4)||'-'||substr(#{fqsjq},5,2)||'-'||substr(#{fqsjq},7,2)
+	        </if>
+	        <if test="fqsjz != null and fqsjz !=''">
+	            AND to_char(a.CREATE_DATE,'yyyy-MM-dd')<![CDATA[<=]]>substr(#{fqsjz},0,4)||'-'||substr(#{fqsjz},5,2)||'-'||substr(#{fqsjz},7,2)
+	        </if>
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysNotice">
+		SELECT 
+			<include refid="sysNoticeColumns"/>
+		FROM FBIDP_SYS_NOTICE a
+		<include refid="sysNoticeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="noticeTitle!=null and noticeTitle!=''">
+				and a.NOTICE_TITLE like '%'||#{noticeTitle}||'%'
+			</if>
+			<if test="noticeType!=null and noticeType!=''">
+				and a.NOTICE_TYPE =#{noticeType}
+			</if>
+			<if test="validDate!=null and validDate!=''">
+				and a.VALID_DATE =#{validDate}
+			</if>
+			<if test="validFlag!=null and validFlag!=''">
+				and a.VALID_FLAG =#{validFlag}
+			</if>
+			<if test="content!=null and content!=''">
+				and a.CONTENT =#{content}
+			</if>
+			<if test="contactId!=null and contactId!=''">
+				and a.CONTACT_ID =#{contactId}
+			</if>
+			<if test="remark!=null and remark!=''">
+				and a.REMARK =#{remark}
+			</if>
+			<if test="checked!=null and checked!=''">
+				and a.CHECKED =#{checked}
+			</if>
+			<if test="createBy!=null and createBy!=''">
+				and a.CREATE_BY  like '%'||#{createBy}||'%'
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO FBIDP_SYS_NOTICE(
+			ID ,
+			NOTICE_TITLE ,
+			NOTICE_TYPE ,
+			VALID_DATE ,
+			VALID_FLAG ,
+			CONTENT ,
+			CONTACT_ID ,
+			REMARKS ,
+			CHECKED ,
+			CREATE_BY ,
+			CREATE_DATE ,
+			UPDATE_BY ,
+			UPDATE_DATE
+		) values(
+			#{id} , 
+			#{noticeTitle} , 
+			#{noticeType} , 
+			#{validDate} , 
+			#{validFlag} , 
+			#{content} , 
+			#{contactId} , 
+			#{remarks} , 
+			#{checked} , 
+			#{createBy} , 
+			#{createDate} , 
+			#{updateBy} , 
+			#{updateDate} 
+		)
+	</insert>
+	
+	<update id="update">
+		update FBIDP_SYS_NOTICE
+		<set>
+			NOTICE_TITLE = #{noticeTitle} ,
+			NOTICE_TYPE = #{noticeType} ,
+			VALID_DATE = #{validDate} ,
+			VALID_FLAG = #{validFlag} ,
+			CONTENT = #{content} ,
+			CONTACT_ID = #{contactId} ,
+			CHECKED = #{checked} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE FBIDP_SYS_NOTICE SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+	<update id="updateChecked">
+		update FBIDP_SYS_NOTICE
+		<set>
+			CHECKED = #{checked},
+			update_by = #{updateBy},
+			update_date = sysdate,
+		</set>
+		where id=#{id}
+	</update>
+	
+	<select id="getUncheck" resultType="java.lang.String">
+	  select count(*) wyxxs from FBIDP_SYS_NOTICE where checked='0' and CONTACT_ID =#{contactId}
+	</select>
+</mapper>
+

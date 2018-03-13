@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysUserRoleDao">
+	
+	<sql id="sysUserRoleColumns">
+		a.ID as "id" , 
+		a.ROLE_ID as "roleId" , 
+		a.USER_ID as "userId" , 
+		a.REMARKS as "remarks" , 
+		a.ENABLE_FLAG as "enableFlag" , 
+		a.DEL_FLAG as "delFlag" , 
+		a.CREATE_BY as "createBy" , 
+		a.CREATE_DATE as "createDate" , 
+		a.UPDATE_BY as "updateBy" , 
+	    a.UPDATE_DATE as "updateDate"
+	</sql>
+	
+	<sql id="sysUserRoleJoins">
+	
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysUserRole">
+		SELECT 
+			<include refid="sysUserRoleColumns"/>
+		FROM FBIDP_SYS_USER_ROLE a
+		<include refid="sysUserRoleJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM FBIDP_SYS_USER_ROLE a
+		<include refid="sysUserRoleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysUserRole">
+		SELECT 
+			<include refid="sysUserRoleColumns"/>
+		FROM FBIDP_SYS_USER_ROLE a
+		<include refid="sysUserRoleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysUserRole">
+		SELECT 
+			<include refid="sysUserRoleColumns"/>
+		FROM FBIDP_SYS_USER_ROLE a
+		<include refid="sysUserRoleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO FBIDP_SYS_USER_ROLE(
+			ID ,
+				ROLE_ID ,
+				USER_ID ,
+				REMARKS ,
+				ENABLE_FLAG ,
+				DEL_FLAG ,
+				CREATE_BY ,
+				CREATE_DATE ,
+				UPDATE_BY ,
+				UPDATE_DATE
+			) values(
+    		#{id} , 
+	    		#{roleId} , 
+	    		#{userId} , 
+	    		#{remarks} , 
+	    		#{enableFlag} , 
+	    		#{delFlag} , 
+	    		#{createBy} , 
+	    		#{createDate} , 
+	    		#{updateBy} , 
+	    		#{updateDate} 
+			)
+	</insert>
+	
+	<update id="update">
+		update FBIDP_SYS_USER_ROLE
+		<set>
+			ROLE_ID = #{roleId} ,
+			USER_ID = #{userId} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE FBIDP_SYS_USER_ROLE SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<where> 
+			<if test="id!=null and id!=''">
+				and id = #{id}
+			</if>
+			<if test="roleId != null and roleId != ''">
+				and role_id = #{roleId}
+			</if>
+			<if test="userId != null and userId != ''">
+				and user_id = #{userId}
+			</if>
+		</where>
+	</delete>
+	
+	<delete id="deleteByUserId" >
+		DELETE FROM FBIDP_SYS_USER_ROLE WHERE user_id = #{userId}
+	</delete>
+	
+	<select id="queryNotGrantRoleById" 
+			resultType="com.javenluo.ranger.sys.entity.SysRole">
+		SELECT 
+		    a.ID as "id", 
+			a.CODE as "code", 
+			a.NAME as "name",
+			org.org_code as "orgCode",
+			org.full_org_codes as "fullOrgCodes",
+			org.full_org_names as "fullOrgNames"
+		FROM FBIDP_SYS_ROLE a
+		inner join fbidp_sys_org org on a.org_id=org.id
+	   WHERE a.id not in (
+	   	  select role_id 
+	   	    from FBIDP_SYS_USER_ROLE b
+	   	   where b.user_id = #{userId}
+	   	     and b.del_flag = #{DEL_FLAG_NORMAL}
+	   )
+	   and a.del_flag = #{DEL_FLAG_NORMAL}
+	   <if test="code!=null and code!=''">
+			and a.CODE = #{code}
+		</if>
+		<if test="name!=null and name!=''">
+			<if test="dbName == 'oracle'">
+				and a.name like '%'||#{name}||'%'
+			</if>
+			<if test="dbName == 'mysql'">
+				and a.name like CONCAT('%', #{name}, '%')
+			</if>
+		</if>
+	</select>
+	
+	<select id="queryGrantRoleById" 
+			resultType="com.javenluo.ranger.sys.entity.SysRole">
+		SELECT 
+		    a.ID as "id", 
+			a.CODE as "code", 
+			a.NAME as "name",
+			org.org_code as "orgCode",
+			org.full_org_codes as "fullOrgCodes",
+			org.full_org_names as "fullOrgNames"
+		FROM FBIDP_SYS_ROLE a
+		inner join fbidp_sys_org org on a.org_id=org.id
+	   WHERE a.id in (
+	   	  select role_id 
+	   	    from FBIDP_SYS_USER_ROLE b
+	   	   where b.user_id = #{userId}
+	   	     and b.del_flag = #{DEL_FLAG_NORMAL}
+	   )
+	   and a.del_flag = #{DEL_FLAG_NORMAL}
+	   <if test="code!=null and code!=''">
+			and a.CODE = #{code}
+		</if>
+		<if test="name!=null and name!=''">
+			<if test="dbName == 'oracle'">
+				and a.name like '%'||#{name}||'%'
+			</if>
+			<if test="dbName == 'mysql'">
+				and a.name like CONCAT('%', #{name}, '%')
+			</if>
+		</if>
+	</select>
+	
+	<select id="querySysUserBySysUserRole"  resultType="com.javenluo.ranger.sys.entity.SysUser">
+		SELECT
+			a.ID AS "id",
+			a. NAME AS "name",
+			a.IDNO AS "idNumber",
+			a.BIRTHDAY AS "birthday",
+			a.SEX AS "sex",
+			a.OFFICEPHONE AS "tel",
+			a.MOBILE AS "mobileTel",
+			a.EMAIL AS "email",
+			a.LOGIN_ID AS "loginId",
+			a.PASSWD AS "passwd",
+			a.LASTLOGIN AS "lastLoginTime",
+			a.REMARKS AS "remarks",
+			a.ENABLE_FLAG AS "enableFlag",
+			a.DEL_FLAG AS "delFlag",
+			a.CREATE_BY AS "createBy",
+			a.CREATE_DATE AS "createDate",
+			a.UPDATE_BY AS "updateBy",
+			a.UPDATE_DATE AS "updateDate",
+			a.ORG_ID AS "orgId",
+			a.SHOWORDER AS "showOrder",
+			(SELECT org.org_code FROM FBIDP_SYS_ORG org WHERE org.ID=a.org_id)    AS "orgCode"
+			FROM
+						FBIDP_SYS_ROLE E,
+						fbidp_sys_org  g,
+						FBIDP_SYS_USER_ROLE R,
+						fbidp_sys_user a 
+				WHERE
+						E.ORG_ID=G.ID 
+						AND R.ROLE_ID=E.ID 
+						AND A.ID=R.USER_ID
+						AND A.DEL_FLAG=#{DEL_FLAG_NORMAL}
+						AND R.DEL_FLAG=#{DEL_FLAG_NORMAL}
+						AND G.DEL_FLAG=#{DEL_FLAG_NORMAL}
+						AND E.DEL_FLAG=#{DEL_FLAG_NORMAL}
+				    <if test="roleId!=null and roleId!=''">
+						and E.ID = #{roleId}
+					</if>
+					<if test="code!=null and code!=''">
+						and E.CODE = #{code}
+					</if>
+					 <if test="orgCode!=null and orgCode!=''">
+						and G.ORG_CODE = #{orgCode}
+					</if>
+	</select>
+	
+	<select id="querySysUserBySysUserRoleCount"  resultType="java.lang.Long">
+			SELECT
+				count(1)
+				FROM
+					FBIDP_SYS_ROLE E,
+					fbidp_sys_org  g,
+					FBIDP_SYS_USER_ROLE R,
+					fbidp_sys_user a 
+				WHERE
+					E.ORG_ID=G.ID 
+					AND R.ROLE_ID=E.ID 
+					AND A.ID=R.USER_ID
+					AND A.DEL_FLAG=#{DEL_FLAG_NORMAL}
+					AND R.DEL_FLAG=#{DEL_FLAG_NORMAL}
+					AND G.DEL_FLAG=#{DEL_FLAG_NORMAL}
+					AND E.DEL_FLAG=#{DEL_FLAG_NORMAL}
+			    <if test="roleId!=null and roleId!=''">
+					and E.ID = #{roleId}
+				</if>
+				<if test="code!=null and code!=''">
+					and E.CODE = #{code}
+				</if>
+				 <if test="orgCode!=null and orgCode!=''">
+					and G.ORG_CODE = #{orgCode}
+				</if>
+	</select>
+	
+	<!-- 角色已选择用户 -->
+	<select id="roleYxUser" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		select t.id             as "id",
+		       t.name           as "name",
+		       t.login_id       as "loginId",
+		       o.org_code       as "orgCode",
+		       o.full_org_names as "fullOrgNames"
+		  from fbidp_sys_user t, fbidp_sys_user_role u, fbidp_sys_org o
+		 where t.id = u.user_id
+		   and t.org_id = o.id
+		   and t.del_flag = #{DEL_FLAG_NORMAL}
+		   and u.del_flag = #{DEL_FLAG_NORMAL}
+		   and o.del_flag = #{DEL_FLAG_NORMAL}
+		   and t.id != '1'
+		   and u.role_id = #{roleId}
+		   <if test="orgId != null and orgId !=''">
+		   	 and o.full_org_ids like
+		   	 <if test="dbName == 'oracle'">'%'||#{orgId}||'%'</if>
+			 <if test="dbName == 'mysql'">CONCAT('%', #{orgId}, '%')</if>
+		   </if>
+		   <if test="loginId != null and loginId !='' ">
+				and t.LOGIN_ID like
+				<if test="dbName == 'oracle'">#{loginId}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{loginId}, '%')</if>
+			</if>
+		   <if test="name != null and name !=''">
+		   	and t.name like
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%',#{name}, '%')</if>
+		   </if>
+		   order by t.login_id 
+	</select>
+	
+	<!-- 角色未选择用户 -->
+	<select id="roleWxUser" resultType="com.javenluo.ranger.sys.entity.SysUser">
+		select t.id             as "id",
+		       t.name           as "name",
+		       t.login_id       as "loginId",
+		       o.org_code       as "orgCode",
+		       o.full_org_names as "fullOrgNames"
+		  from fbidp_sys_user t, fbidp_sys_org o
+		 where t.org_id = o.id
+		   and t.del_flag = #{DEL_FLAG_NORMAL}
+		   and o.del_flag = #{DEL_FLAG_NORMAL}
+		   and t.id != '1'
+		   <if test="orgId != null and orgId !=''">
+		   	 and o.full_org_ids like
+		   	 <if test="dbName == 'oracle'">'%'||#{orgId}||'%'</if>
+			 <if test="dbName == 'mysql'">CONCAT('%', #{orgId}, '%')</if>
+		   </if>
+		   and t.id not in (select t.id
+		                      from fbidp_sys_user t, fbidp_sys_user_role u
+		                     where t.id = u.user_id
+		                       and t.del_flag = #{DEL_FLAG_NORMAL}
+		                       and u.del_flag = #{DEL_FLAG_NORMAL}
+		                       and u.role_id = #{roleId})
+		                       <if test="orgId != null and orgId !=''">
+							   	 and o.full_org_ids like
+							   	 <if test="dbName == 'oracle'">'%'||#{orgId}||'%'</if>
+								 <if test="dbName == 'mysql'">CONCAT('%', #{orgId}, '%')</if>
+							   </if>
+		   <if test="loginId != null and loginId !='' ">
+				and t.LOGIN_ID like
+				<if test="dbName == 'oracle'">#{loginId}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{loginId}, '%')</if>
+			</if>
+		   <if test="name != null and name !=''">
+		   	and t.name like
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%',#{name}, '%')</if>
+		   </if>
+		   order by t.login_id 
+	</select>
+	
+</mapper>
+

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysLogDao">
+	
+	<sql id="sysLogColumns">
+			a.id as "id" , 
+				a.type as "type" , 
+				a.title as "title" , 
+				a.create_by as "createBy" , 
+				a.create_date as "createDate" , 
+				a.remote_addr as "remoteAddr" , 
+				a.user_agent as "userAgent" , 
+				a.request_uri as "requestUri" , 
+				a.method as "method" , 
+				a.params as "params" , 
+			    a.exception as "exception",
+			    <if test="dbName == 'oracle'">
+					to_char(a.create_date,'yyyy-mm-dd') AS createStr
+				</if>
+				<if test="dbName == 'mysql'">
+					date_format(a.create_date,'%Y-%m-%d') AS createStr
+				</if>
+	</sql>
+	
+	<sql id="sysLogJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysLog">
+		SELECT 
+			<include refid="sysLogColumns"/>
+		FROM fbidp_sys_log a
+		<include refid="sysLogJoins"/>
+		WHERE a.id = #{id} 
+			
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM fbidp_sys_log a, fbidp_sys_user b left join fbidp_sys_org c on b.ORG_ID = c.ID
+		<include refid="sysLogJoins"/>
+		<where>
+			a.create_by = b.id  
+			and a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="createByName !=null and createByName !='' ">
+				<if test="dbName == 'oracle'">
+					and b.name like '%'||#{createByName}||'%'
+				</if>
+				<if test="dbName == 'mysql'">
+					and b.name like CONCAT('%', #{createByName}, '%')
+				</if>
+			</if>
+			<if test="title !=null and title !='' ">
+				<if test="dbName == 'oracle'">
+					and a.title like '%'||#{title}||'%'
+				</if>
+				<if test="dbName == 'mysql'">
+					and a.title like CONCAT('%', #{title}, '%')
+				</if>
+			</if>
+			<if test="type !=null and type !='' ">
+				and a.type = #{type}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysLog">
+		SELECT 
+			b.name as "createByName" ,
+			c.FULL_ORG_NAMES as "orgName" ,
+			<include refid="sysLogColumns"/>
+		FROM fbidp_sys_log a, fbidp_sys_user b left join fbidp_sys_org c on b.ORG_ID = c.ID
+		<include refid="sysLogJoins"/>
+		<where>
+			a.create_by = b.id 
+			and a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="createByName !=null and createByName !='' ">
+				<if test="dbName == 'oracle'">
+					and b.name like '%'||#{createByName}||'%'
+				</if>
+				<if test="dbName == 'mysql'">
+					and b.name like CONCAT('%', #{createByName}, '%')
+				</if>
+			</if>
+			<if test="title !=null and title !='' ">
+				<if test="dbName == 'oracle'">
+					and a.title like '%'||#{title}||'%'
+				</if>
+				<if test="dbName == 'mysql'">
+					and a.title like CONCAT('%', #{title}, '%')
+				</if>
+			</if>
+			<if test="type !=null and type !='' ">
+				and a.type = #{type}
+			</if>
+		</where>
+		ORDER BY a.create_date DESC
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysLog">
+		SELECT 
+			<include refid="sysLogColumns"/>
+		FROM fbidp_sys_log a
+		<include refid="sysLogJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fbidp_sys_log(
+			id ,
+				type ,
+				title ,
+				create_by ,
+				create_date ,
+				remote_addr ,
+				user_agent ,
+				request_uri ,
+				method ,
+				params ,
+				exception
+			) values(
+    		#{id} , 
+	    		#{type} , 
+	    		#{title} , 
+	    		#{createBy} , 
+	    		#{createDate} , 
+	    		#{remoteAddr} , 
+	    		#{userAgent} , 
+	    		#{requestUri} , 
+	    		#{method} , 
+	    		#{params} , 
+	    		#{exception} 
+			)
+	</insert>
+	
+	<update id="update">
+		update fbidp_sys_log
+		<set>
+			type = #{type} ,
+			title = #{title} ,
+			remote_addr = #{remoteAddr} ,
+			user_agent = #{userAgent} ,
+			request_uri = #{requestUri} ,
+			method = #{method} ,
+			params = #{params} ,
+			exception = #{exception} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE fbidp_sys_log SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+
+</mapper>
+

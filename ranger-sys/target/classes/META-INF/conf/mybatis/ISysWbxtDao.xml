@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysWbxtDao">
+
+	<sql id="sysWbxtColumns">
+		a.ID as "id" ,
+		a.XTBM as "xtbm" ,
+		a.XTMC as "xtmc" ,
+		a.org_id as "orgId",
+		(select FULL_ORG_NAMES from fbidp_sys_org org where org.id=a.org_id) fullOrgNames,
+		a.XTWZ as "xtwz" ,
+		a.XTFZR as "xtfzr" ,
+		a.FXRLXDH as "fxrlxdh" ,
+		a.XTMM as "xtmm" ,
+		a.REMARKS as "remarks" ,
+		a.ENABLE_FLAG as "enableFlag" ,
+		a.DEL_FLAG as "delFlag" ,
+		a.CREATE_BY as "createBy" ,
+		a.CREATE_DATE as "createDate" ,
+		a.UPDATE_BY as "updateBy" ,
+		a.UPDATE_DATE as "updateDate",
+		org.full_org_names as "fullOrgNames",
+        org.org_name as "orgName",
+        DBJK as dbjk,
+        JKZH as jkzh,
+        JKMM as jkmm 
+	</sql>
+
+	<sql id="sysWbxtJoins">
+	</sql>
+
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysWbxt">
+		SELECT
+		<include refid="sysWbxtColumns" />
+		FROM FBIDP_SYS_WBXT a left join fbidp_sys_org org on org.id = a.org_id
+		<include refid="sysWbxtJoins" />
+		<where>
+			<if test="id != null and id !=''">
+			and a.id = #{id}
+			</if>
+			<if test="xtbm != null and xtbm !=''">
+			and a.xtbm = #{xtbm}
+			</if>
+		</where>
+	</select>
+
+	<select id="findCount" resultType="java.lang.Long" >
+		SELECT
+		count(1)
+		FROM FBIDP_SYS_WBXT a left join fbidp_sys_org org on org.id = a.org_id
+		<include refid="sysWbxtJoins" />
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="xtbm != null and xtbm != '' ">
+				and a.xtbm like
+				<if test="dbName == 'oracle'">'%'||#{xtbm}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{xtbm}, '%')</if>
+			</if>
+			<if test="xtmc != null and xtmc != '' ">
+				and xtmc like
+				<if test="dbName == 'oracle'">'%'||#{xtmc}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{xtmc}, '%')</if>
+			</if>
+		</where>
+	</select>
+
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysWbxt">
+		SELECT
+		<include refid="sysWbxtColumns" />
+		FROM FBIDP_SYS_WBXT a left join fbidp_sys_org org on org.id = a.org_id
+		<include refid="sysWbxtJoins" />
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="xtbm != null and xtbm != '' ">
+				and a.xtbm like
+				<if test="dbName == 'oracle'">'%'||#{xtbm}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{xtbm}, '%')</if>
+			</if>
+			<if test="xtmc != null and xtmc != '' ">
+				and xtmc like
+				<if test="dbName == 'oracle'">'%'||#{xtmc}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{xtmc}, '%')</if>
+			</if>
+		</where>
+		order by org.org_code,a.id
+	</select>
+
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysWbxt">
+		SELECT
+		<include refid="sysWbxtColumns" />
+		FROM FBIDP_SYS_WBXT a
+		<include refid="sysWbxtJoins" />
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>
+	</select>
+
+	<insert id="insert">
+		INSERT INTO FBIDP_SYS_WBXT(
+			ID ,
+			XTBM ,
+			XTMC ,
+			ORG_ID ,
+			XTWZ ,
+			XTFZR ,
+			FXRLXDH ,
+			XTMM ,
+			REMARKS ,
+			ENABLE_FLAG ,
+			DEL_FLAG ,
+			CREATE_BY ,
+			CREATE_DATE ,
+			UPDATE_BY ,
+			UPDATE_DATE ,
+			DBJK ,
+			JKZH ,
+			JKMM 
+		) values(
+			#{id} ,
+			#{xtbm} ,
+			#{xtmc} ,
+			#{orgId} ,
+			#{xtwz} ,
+			#{xtfzr} ,
+			#{fxrlxdh} ,
+			#{xtmm} ,
+			#{remarks} ,
+			#{enableFlag} ,
+			#{delFlag} ,
+			#{createBy} ,
+			#{createDate} ,
+			#{updateBy} ,
+			#{updateDate},
+			#{dbjk} ,
+			#{jkzh} ,
+			#{jkmm}
+		)
+	</insert>
+
+	<update id="update">
+		update FBIDP_SYS_WBXT
+		<set>
+			XTBM = #{xtbm} ,
+			XTMC = #{xtmc} ,
+			org_id = #{orgId} ,
+			XTWZ = #{xtwz} ,
+			XTFZR = #{xtfzr} ,
+			FXRLXDH = #{fxrlxdh} ,
+			XTMM = #{xtmm} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			DBJK = #{dbjk} ,
+			JKZH = #{jkzh} ,
+			JKMM = #{jkmm} 
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete">
+		UPDATE FBIDP_SYS_WBXT SET
+		del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+	<!-- 校验系统编号重复 -->
+	<select id="xtbmCount" resultType="java.lang.Long">
+		SELECT
+			COUNT(1)
+		FROM
+			fbidp_sys_wbxt t,
+			fbidp_sys_user t1
+		WHERE
+			t.xtbm = #{xtbm}
+		OR t1.login_id = #{xtbm}
+	</select>
+	
+	<!-- 更新用户密码 -->
+	<update id="updatePassword">
+		UPDATE FBIDP_SYS_WBXT SET 
+			xtmm = #{xtmm} 
+		WHERE xtbm = #{xtbm}
+	</update>
+	
+	
+	<select id="queryDbjk" resultType="com.javenluo.ranger.sys.entity.SysWbxt">
+		select <include refid="sysWbxtColumns" />
+		  from fbidp_sys_user b
+		 inner join FBIDP_SYS_WBXT a on b.login_id = a.xtbm
+		 left join fbidp_sys_org org on org.id = a.org_id
+	    <where>
+	   		<if test="tenantId != null and tenantId !=''">
+				and b.id = #{tenantId}
+			</if>
+	    </where>
+	</select>
+	
+
+</mapper>
+

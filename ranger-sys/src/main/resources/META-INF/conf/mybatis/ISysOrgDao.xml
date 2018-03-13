@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysOrgDao">
+	
+	<sql id="sysOrgColumns">
+	   t.id,
+	   t.ORG_CODE orgCode,
+	   t.ORG_NAME orgName,
+	   t.ORG_CODE oldOrgCode,
+	   t.ORG_NAME oldOrgName,
+	   t.ORG_SHORT_NAME orgShortName, 
+	   t.ORG_SHORT_NAME oldOrgShortName, 
+	   t.FULL_ORG_IDS fullOrgIds,
+	   t.FULL_ORG_CODES fullOrgCodes,
+	   t.FULL_ORG_NAMES fullOrgNames,
+	   t.FULL_ORG_IDS oldFullOrgIds,
+	   t.FULL_ORG_CODES oldFullOrgCodes,
+	   t.FULL_ORG_NAMES oldFullOrgNames,
+	   t1.name leaderName,
+       t.phone, 
+       t.status,
+       t.showorder,
+       t.remarks,
+       t.address ,
+       t.ENABLE_FLAG as "enableFlag", 
+       t.PARENT_ORG_ID parentOrgId,
+       t.PARENT_ORG_CODE parentOrgCode,
+       (select tt.ORG_NAME from fbidp_sys_org tt where tt.id=t.PARENT_ORG_ID) parentOrgName,
+       (select count(1) from fbidp_sys_org tt where tt.PARENT_ORG_ID=t.id and tt.del_flag = '0') childNum,
+       (select case when count(1)>0 then 'closed' else 'open' end state  
+          from fbidp_sys_org tt 
+         where tt.PARENT_ORG_ID=t.id and tt.del_flag = '0') state,
+        t.swbm_bj swbmbj,
+        t.ORGATTRIBUTE as orgAttribute 
+	</sql>
+	
+	<sql id="sysOrgJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+			<include refid="sysOrgColumns"/>
+		from fbidp_sys_org t 
+		left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+		<where>
+			t.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="id != null and id != ''">
+			and t.id = #{id}
+			</if>
+			<if test="orgCode != null and orgCode != ''">
+			and t.org_code = #{orgCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM fbidp_sys_org t
+		<include refid="sysOrgJoins"/>
+		<where>
+			t.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parentOrgId!=null and parentOrgId!=''">
+				<if test="withSelf">
+					and (t.PARENT_ORG_ID = #{parentOrgId} or t.id = #{parentOrgId} )
+				</if>
+				<if test="!withSelf">
+					and (t.PARENT_ORG_ID = #{parentOrgId})
+				</if>
+			</if>
+			<if test="parentOrgCode!=null and parentOrgCode!=''">
+				and t.PARENT_ORG_CODE = #{parentOrgCode}
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and t.org_code = #{orgCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+			<include refid="sysOrgColumns"/>
+		from fbidp_sys_org t 
+		left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+		<where>
+			t.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parentOrgId!=null and parentOrgId!=''">
+				<if test="withSelf">
+					and (t.PARENT_ORG_ID = #{parentOrgId} or t.id = #{parentOrgId} )
+				</if>
+				<if test="!withSelf">
+					and (t.PARENT_ORG_ID = #{parentOrgId})
+				</if>
+			</if>
+			<if test="parentOrgCode!=null and parentOrgCode!=''">
+				<if test="withSelf">
+					and (t.PARENT_ORG_CODE = #{parentOrgCode} or t.org_code = #{parentOrgCode} )
+				</if>
+				<if test="!withSelf">
+					and (t.PARENT_ORG_CODE = #{parentOrgCode})
+				</if>
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and t.org_code = #{orgCode}
+			</if>
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				and T.FULL_ORG_CODES like 
+				<if test="dbName == 'oracle'">#{fullOrgCodes}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{fullOrgCodes}, '%')</if>
+			</if>
+			
+			<if test="fullOrgCodeList != null and fullOrgCodeList.size > 0 ">
+				AND 
+				<foreach collection="fullOrgCodeList" item="fullOrgCode" index="index"
+		            open="(" close=")" separator="or">
+		            T.FULL_ORG_CODES like 
+		            <if test="dbName == 'oracle'">#{fullOrgCode}||'%'</if>
+					<if test="dbName == 'mysql'">CONCAT(#{fullOrgCode}, '%')</if>
+		        </foreach>
+	        </if>
+		</where>
+		order by t.showorder
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+			<include refid="sysOrgColumns"/>
+		from fbidp_sys_org t 
+		left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+		<where>
+			t.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parentOrgId!=null and parentOrgId!=''">
+				and t.PARENT_ORG_ID = #{parentOrgId}
+			</if>
+			<if test="parentOrgCode!=null and parentOrgCode!=''">
+				and t.PARENT_ORG_CODE = #{parentOrgCode}
+			</if>
+			<if test="orgCode!=null and orgCode!=''">
+				and t.org_code = #{orgCode}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert">
+		insert into  fbidp_sys_org(
+		    id,
+			org_code,
+			org_name,
+			org_short_name,
+			leader, 
+		    phone, 
+		    status,
+		    showorder,
+		    address ,
+		    parent_org_id,
+		    parent_org_code,
+		    FULL_ORG_IDS,
+		    FULL_ORG_CODES,
+		    FULL_ORG_NAMES,
+		    ENABLE_FLAG , 
+		    DEL_FLAG , 
+			CREATE_BY , 
+			CREATE_DATE , 
+			UPDATE_BY , 
+			UPDATE_DATE,
+			REMARKS ,
+			ORGATTRIBUTE
+		 ) values (
+		 	#{id},
+		 	#{orgCode},
+		 	#{orgName},
+		 	#{orgShortName},
+		 	#{leaderId},
+		 	#{phone},
+		 	#{status},
+		 	#{showOrder},
+		 	#{address},
+		 	#{parentOrgId},
+		 	#{parentOrgCode},
+		 	#{fullOrgIds},
+		 	#{fullOrgCodes},
+		 	#{fullOrgNames},
+		 	#{enableFlag} ,
+		 	#{delFlag} , 
+			#{createBy} , 
+			#{createDate} , 
+			#{updateBy} , 
+			#{updateDate} ,  
+			#{remarks} ,
+			#{orgAttribute} 
+		 )
+	</insert>
+	
+	<update id="update">
+		update fbidp_sys_org
+		<set> 
+			org_code=#{orgCode},
+			org_name=#{orgName},
+			org_short_name=#{orgShortName},
+		 	leader=#{leaderId},
+		 	phone=#{phone},
+		 	status=#{status},
+		 	showorder=#{showOrder},
+		 	PARENT_ORG_ID=#{parentOrgId},
+            PARENT_ORG_CODE=#{parentOrgCode},
+		 	FULL_ORG_IDS=#{fullOrgIds},
+		 	FULL_ORG_CODES=#{fullOrgCodes},
+		 	FULL_ORG_NAMES=#{fullOrgNames},
+		 	address=#{address},
+		 	update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks},
+			ORGATTRIBUTE = #{orgAttribute},
+			ENABLE_FLAG = #{enableFlag}
+		</set>
+		 where ID=#{id}
+	</update>
+	
+	<update id="updateFullOrgCodes">
+		update fbidp_sys_org
+		set FULL_ORG_CODES = REPLACE(FULL_ORG_CODES,#{oldFullOrgCodes},#{fullOrgCodes}) ,
+		 	FULL_ORG_NAMES = REPLACE(FULL_ORG_NAMES,#{oldFullOrgNames},#{fullOrgNames}),
+		 	PARENT_ORG_CODE = #{parentOrgCode}
+		where FULL_ORG_CODES like
+			<if test="dbName == 'mysql'">
+				 CONCAT(#{oldFullOrgCodes}, '%') 
+			</if>
+			<if test="dbName == 'oracle'">
+				#{oldFullOrgCodes}||'%'
+			</if>
+	</update>
+
+	<delete id="delete" >
+		UPDATE fbidp_sys_org SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE ID = #{id}
+	</delete>
+	
+	<select id="queryTopOrgListByAdminUser" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+			<include refid="sysOrgColumns"/>
+		from fbidp_sys_org t 
+		left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+		<where>
+			t.del_flag = '0'
+			and (t.PARENT_ORG_ID = #{topOrgId} or t.id = #{topOrgId} )
+		</where>
+		order by t.showorder
+	</select>
+	
+	<select id="queryTopOrgListByCommonUser" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+			<include refid="sysOrgColumns"/>
+		from fbidp_sys_org t 
+		left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+		<where>
+			t.del_flag = '0'
+			and (
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				T.FULL_ORG_CODES = #{fullOrgCodes}
+			</if>
+			<if test="fullOrgCodeList != null and fullOrgCodeList.size > 0 ">
+				or T.FULL_ORG_CODES in  
+				<foreach collection="fullOrgCodeList" item="fullOrgCode" index="index"
+		            open="(" close=")" separator=",">
+		            #{fullOrgCode}
+		        </foreach>
+	        </if>
+			)
+		</where>
+	</select>
+	
+	
+	<select id="queryTopOrgListByShijuUser" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+			<include refid="sysOrgColumns"/>
+		from fbidp_sys_org t 
+		left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+		<where>
+			t.del_flag = '0'
+			and t.PARENT_ORG_CODE = #{orgCode} 
+		</where>
+		order by t.SHOWORDER
+	</select>
+
+	
+	<select id="queryJdjb" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+	SELECT 
+	<include refid="sysOrgColumns"/>
+	from fbidp_sys_org t 
+	left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+	where t.del_flag = '0'
+	 and t.org_code = #{orgCode}
+	</select>
+
+	<select id="queryCurrentBmList" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+  		SELECT 
+			<include refid="sysOrgColumns"/>
+        FROM fbidp_sys_org t
+        left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+        START WITH   t.org_code = #{orgCode}
+        CONNECT BY PRIOR  t.parent_org_code = t.org_code 
+           and t.swbm_bj='1'
+	</select>
+	
+	<select id="queryAddTreeList" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+  		SELECT 
+			<include refid="sysOrgColumns"/>
+        FROM fbidp_sys_org t
+        left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+        START WITH   t.org_code = #{orgCode}
+        CONNECT BY PRIOR t.org_code = t.parent_org_code
+	</select>	
+	
+	<select id="querySjswjg" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT t.org_code as orgcode, t.ORGATTRIBUTE as orgAttribute,t.parent_org_code as parentOrgCode FROM fbidp_sys_org t where t.org_code = #{orgCode}
+	</select>
+	
+	<select id="queryTopOrgListByTopOrgCode" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+			<include refid="sysOrgColumns"/>
+		from fbidp_sys_org t 
+		left join fbidp_sys_user t1 on t.principal=t1.login_id and t.id = t1.org_id
+		<where>
+			t.del_flag = '0'
+			and (t.PARENT_ORG_CODE = #{topOrgCode} or t.ORG_CODE = #{topOrgCode} )
+			order by SHOWORDER
+		</where>
+	</select>
+	
+	<select id="queryXzqhjc" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		select a.area,b.xzqhjc, a.*
+		  from fbidp_sys_org a, DB_SYPT.T_GY_JS_XZQH b
+		 where a.area = b.xzqhsz_dm 
+		 and a.org_code = #{orgCode}
+	</select>
+	
+	<!-- 机构名称做重复验证 -->
+	<select id="orgCount" resultType="java.lang.Long">
+		select count(1)
+		  from fbidp_sys_org t
+		 where del_flag = #{DEL_FLAG_NORMAL}
+		   <if test="orgName != null and orgName != ''">
+		   and t.org_name = #{orgName}
+		   </if>
+		   <if test="id != null and id != ''">
+		   and t.id != #{id}
+		   </if>
+	</select>
+	
+</mapper>
+

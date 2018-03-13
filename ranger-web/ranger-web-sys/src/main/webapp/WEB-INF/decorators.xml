@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views">
+	
+	<!-- 默认装饰页面, 在需要装饰的页面增加<meta name="decorator" content="default"/> -->
+	<decorator name="default" page="layouts/default.jsp" />
+	
+	<!-- 工作流页面模板 -->
+	<decorator name="bpm4Create" page="layouts/bpm4Create.jsp" />
+	<decorator name="bpm4Handle" page="layouts/bpm4Handle.jsp" />
+	<decorator name="bpm4View" page="layouts/bpm4View.jsp" />
+	
+</decorators>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysMenuDao">
+	
+	<sql id="sysMenuColumns">
+		a.ID as "id", 
+		a.NAME as "name", 
+		a.URL as "url", 
+		a.PARENT_ID as "parentId", 
+		a.PARENT_IDS as "parentIds", 
+		a.SORT_NO as "sortNo", 
+		a.IMAGE_URL as "imageUrl", 
+		a.CONTEXT_RELATIVE as "contextRelative", 
+		a.TARGET as "target", 
+		a.VISIBLE as "visible", 
+		a.TOOLTIP as "tooltip", 
+		a.MENU_TYPE as "menuType", 
+		a.PERMISSION as "permission", 
+		a.REMARKS as "remarks", 
+		a.ENABLE_FLAG as "enableFlag", 
+		a.DEL_FLAG as "delFlag", 
+		a.CREATE_BY as "createBy", 
+		a.CREATE_DATE as "createDate", 
+		a.UPDATE_BY as "updateBy", 
+		a.UPDATE_DATE as "updateDate",
+		(select count(1) from fbidp_sys_menu tt where tt.parent_id=a.id and tt.DEL_FLAG='0') childNum,
+		(select case when count(1)>0 then 'closed' else 'open' end state  
+		    	 from fbidp_sys_menu tt 
+		    	where tt.parent_id=a.id
+		    	  and tt.DEL_FLAG=#{DEL_FLAG_NORMAL}) state,
+		(select count(1) from fbidp_sys_menu tt where tt.parent_id=a.id and tt.DEL_FLAG='0' AND tt.MENU_TYPE != '2') bzsmFlag
+		<if test="roleId!=null and roleId!=''">
+			,
+            <if test="dbName == 'oracle'">
+            	 (select case when count(1) > 0 then '1' else '0' end state
+				          from fbidp_sys_role_menu m
+				         where m.role_id = #{roleId} 
+				           and m.menu_id = a.id
+				           and m.del_flag = #{DEL_FLAG_NORMAL}) checked
+            </if>
+			<if test="dbName == 'mysql'">
+				(select if(sum(1)>0,'1','0') from fbidp_sys_role_menu m 
+			  where m.role_id=#{roleId} 
+                and m.menu_id=a.id 
+                and m.del_flag = #{DEL_FLAG_NORMAL}) checked
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="sysMenuJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysMenu">
+		SELECT 
+			<include refid="sysMenuColumns"/>
+		FROM Fbidp_sys_menu a
+		<include refid="sysMenuJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM Fbidp_sys_menu a
+		<include refid="sysMenuJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parentId!=null and parentId!=''">
+				and a.PARENT_ID = #{parentId} 
+			</if>
+			<if test="menuType!=null and menuType!=''">
+				and a.MENU_TYPE = #{menuType} 
+			</if>
+			<if test="visible !=null and visible !=''">
+				and a.VISIBLE = #{visible} 
+			</if>
+			<if test="userId!=null and userId!=''">
+				and a.id in (
+					select m.menu_id 
+					  from fbidp_sys_user_role u,
+					       fbidp_sys_role_menu m
+					 where u.role_id=m.role_id
+					   and u.user_id=#{userId}
+					   and u.del_flag = #{DEL_FLAG_NORMAL}
+					   and m.del_flag = #{DEL_FLAG_NORMAL}
+				)
+			</if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysMenu">
+		SELECT 
+			<include refid="sysMenuColumns"/>
+		FROM Fbidp_sys_menu a
+		<include refid="sysMenuJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="parentId!=null and parentId!=''">
+				and a.PARENT_ID = #{parentId} 
+			</if>
+			<if test="menuType!=null and menuType!=''">
+				and a.MENU_TYPE = #{menuType} 
+			</if>
+			<if test="visible !=null and visible !=''">
+				and a.VISIBLE = #{visible} 
+			</if>
+			<if test="userId!=null and userId!=''">
+				and a.id in (
+					select m.menu_id 
+					  from fbidp_sys_user_role u,
+					       fbidp_sys_role_menu m
+					 where u.role_id = m.role_id
+					   and u.user_id = #{userId}
+					   and u.del_flag = #{DEL_FLAG_NORMAL}
+					   and m.del_flag = #{DEL_FLAG_NORMAL}
+				)
+			</if>
+		</where>
+		order by a.SORT_NO
+	</select>
+	
+	<select id="findRoleList" resultType="com.javenluo.ranger.sys.entity.SysMenu">
+		select a.ID as "id", 
+		    a.NAME as "name", 
+		    a.URL as "url", 
+		    a.PARENT_ID as "parentId", 
+		    a.PARENT_IDS as "parentIds", 
+		    a.SORT_NO as "sortNo", 
+		    a.IMAGE_URL as "imageUrl", 
+		    a.CONTEXT_RELATIVE as "contextRelative", 
+		    a.TARGET as "target", 
+		    a.VISIBLE as "visible", 
+		    a.TOOLTIP as "tooltip", 
+		    a.MENU_TYPE as "menuType", 
+		    a.PERMISSION as "permission", 
+		    a.REMARKS as "remarks", 
+		    a.ENABLE_FLAG as "enableFlag", 
+		    a.DEL_FLAG as "delFlag", 
+		    a.CREATE_BY as "createBy", 
+		    a.CREATE_DATE as "createDate", 
+		    a.UPDATE_BY as "updateBy", 
+		    a.UPDATE_DATE as "updateDate",
+		    (select count(1) from fbidp_sys_menu tt where tt.parent_id=a.id and tt.DEL_FLAG='0') childNum,
+		    (select case when count(1)>0 then 'closed' else 'open' end state  
+		           from fbidp_sys_menu tt 
+		          where tt.parent_id=a.id
+		            and tt.DEL_FLAG=#{DEL_FLAG_NORMAL}) state
+		  from FBIDP_SYS_ROLE_MENU t, fbidp_sys_menu a
+		 where  t.menu_id = a.id
+		   <if test="roleId!=null and roleId!=''">
+		   		and t.role_id = #{roleId} 
+		   </if>
+		
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysMenu">
+		SELECT 
+			<include refid="sysMenuColumns"/>
+		FROM Fbidp_sys_menu a
+		<include refid="sysMenuJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="menuType!=null and menuType!=''">
+				and a.MENU_TYPE = #{menuType} 
+			</if>
+			<if test="visible !=null and visible !=''">
+				and a.VISIBLE = #{visible} 
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO Fbidp_sys_menu(
+			ID , 
+			NAME , 
+			URL , 
+			PARENT_ID , 
+			PARENT_IDS , 
+			SORT_NO , 
+			IMAGE_URL , 
+			CONTEXT_RELATIVE , 
+			TARGET , 
+			VISIBLE , 
+			TOOLTIP , 
+			MENU_TYPE , 
+			PERMISSION , 
+			REMARKS , 
+			ENABLE_FLAG , 
+			DEL_FLAG , 
+			CREATE_BY , 
+			CREATE_DATE , 
+			UPDATE_BY , 
+			UPDATE_DATE 
+		) values(
+			#{id} , 
+			#{name} , 
+			#{url} , 
+			#{parentId} , 
+			#{parentIds} , 
+			#{sortNo} , 
+			#{imageUrl} , 
+			#{contextRelative} , 
+			#{target} , 
+			#{visible} , 
+			#{tooltip} , 
+			#{menuType} , 
+			#{permission} , 
+			#{remarks} , 
+			#{enableFlag} , 
+			#{delFlag} , 
+			#{createBy} , 
+			#{createDate} , 
+			#{updateBy} , 
+			#{updateDate} 
+		)
+	</insert>
+	
+	<update id="update">
+		update Fbidp_sys_menu
+		<set>
+			NAME = #{name} ,
+			URL = #{url} ,
+			PARENT_ID = #{parentId} ,
+			PARENT_IDS = #{parentIds} ,
+			SORT_NO = #{sortNo} ,
+			IMAGE_URL = #{imageUrl} ,
+			CONTEXT_RELATIVE = #{contextRelative} ,
+			TARGET = #{target} ,
+			VISIBLE = #{visible} ,
+			TOOLTIP = #{tooltip} ,
+			MENU_TYPE = #{menuType} ,
+			PERMISSION = #{permission} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE Fbidp_sys_menu SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+	<select id="findByUserId" resultType="com.javenluo.ranger.sys.entity.SysMenu">
+		SELECT DISTINCT
+			<include refid="sysMenuColumns"/>
+		FROM Fbidp_sys_menu a,
+		     FBIDP_SYS_ROLE_MENU m,
+		     FBIDP_SYS_USER_ROLE r
+		WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
+		AND m.del_flag = #{DEL_FLAG_NORMAL} 
+		AND r.del_flag = #{DEL_FLAG_NORMAL} 
+		AND a.id=m.menu_id
+		and r.role_id=m.role_id
+		and r.user_id=#{userId}
+		order by a.SORT_NO
+	</select>
+	
+	<!-- 查询帮助说明 -->
+	<select id="findBzsmById" resultType="string">
+		SELECT BZSM FROM fbidp_sys_menu t WHERE t.id = #{id}
+	</select>
+
+	<update id="updateBzsmById">
+		update fbidp_sys_menu t set t.bzsm = #{bzsm} where t.id = #{id}
+	</update>
+	
+	<!-- 校验用户重复 -->
+	<select id="menuCount" resultType="java.lang.Long">
+		select count(1)
+		  from fbidp_sys_menu t
+		 where del_flag = #{DEL_FLAG_NORMAL}
+		 	and menu_type != '2'
+		   <if test="name != null and name != ''">
+		   and t.name = #{name}
+		   </if>
+		   <if test="id != null and id != ''">
+		   and t.id != #{id}
+		   </if>
+	</select>
+</mapper>
+

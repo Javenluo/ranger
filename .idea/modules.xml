@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ranger.iml" filepath="$PROJECT_DIR$/ranger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-common/ranger-common.iml" filepath="$PROJECT_DIR$/ranger-common/ranger-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-common/ranger-common-security/ranger-common-security.iml" filepath="$PROJECT_DIR$/ranger-common/ranger-common-security/ranger-common-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-common/ranger-comon-ssm/ranger-comon-ssm.iml" filepath="$PROJECT_DIR$/ranger-common/ranger-comon-ssm/ranger-comon-ssm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-rest/ranger-rest.iml" filepath="$PROJECT_DIR$/ranger-rest/ranger-rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-rest/ranger-rest-authorization/ranger-rest-authorization.iml" filepath="$PROJECT_DIR$/ranger-rest/ranger-rest-authorization/ranger-rest-authorization.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-scheduler/ranger-scheduler.iml" filepath="$PROJECT_DIR$/ranger-scheduler/ranger-scheduler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-sys/ranger-sys.iml" filepath="$PROJECT_DIR$/ranger-sys/ranger-sys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-web/ranger-web.iml" filepath="$PROJECT_DIR$/ranger-web/ranger-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-web/ranger-web-common/ranger-web-common.iml" filepath="$PROJECT_DIR$/ranger-web/ranger-web-common/ranger-web-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ranger-web/ranger-web-sys/ranger-web-sys.iml" filepath="$PROJECT_DIR$/ranger-web/ranger-web-sys/ranger-web-sys.iml" />
+    </modules>
+  </component>
+</project>

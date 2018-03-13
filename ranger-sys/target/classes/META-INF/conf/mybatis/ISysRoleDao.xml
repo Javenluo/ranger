@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysRoleDao">
+	
+	<sql id="sysRoleColumns">
+		a.ID as "id", 
+		a.CODE as "code", 
+		a.NAME as "name", 
+		a.ORG_ID as "orgId", 
+		a.SHOWORDER as "showOrder", 
+		a.SCOPE as "scope", 
+		a.REMARKS as "remarks", 
+		a.ENABLE_FLAG as "enableFlag", 
+		a.DEL_FLAG as "delFlag", 
+		a.CREATE_BY as "createBy", 
+		a.CREATE_DATE as "createDate", 
+		a.UPDATE_BY as "updateBy", 
+		a.UPDATE_DATE as "updateDate",
+		org.org_code as "orgCode",
+		org.full_org_codes as "fullOrgCodes",
+		org.full_org_names as "fullOrgNames",
+		(select count(1) from FBIDP_SYS_USER_ROLE b where b.role_id = a.id and b.del_flag = '0') as "childNum"
+	</sql>
+	
+	<sql id="sysRoleJoins">
+		inner join fbidp_sys_org org on a.org_id=org.id
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysRole">
+		SELECT 
+			<include refid="sysRoleColumns"/>
+		FROM fbidp_sys_role a
+		<include refid="sysRoleJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="getByCode" resultType="com.javenluo.ranger.sys.entity.SysRole">
+		SELECT 
+			<include refid="sysRoleColumns"/>
+		FROM fbidp_sys_role a
+		<include refid="sysRoleJoins"/>
+		WHERE a.code = #{code}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM fbidp_sys_role a
+		<include refid="sysRoleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="code!=null and code!=''">
+				and a.CODE like
+				<if test="dbName == 'oracle'">'%'||#{code}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{code}, '%')</if>
+			</if>
+			<if test="name!=null and name!=''">
+				and a.name like 
+				<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
+			</if>
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				and org.FULL_ORG_CODES like 
+				<if test="dbName == 'oracle'">#{fullOrgCodes}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{fullOrgCodes}, '%')</if>
+			</if>
+			<if test="orgCode != null and orgCode !='' ">
+				and org.org_code = #{orgCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysRole">
+		SELECT 
+			<include refid="sysRoleColumns"/>
+		FROM fbidp_sys_role a
+		<include refid="sysRoleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="code!=null and code!=''">
+				and a.CODE like
+				<if test="dbName == 'oracle'">'%'||#{code}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT('%', #{code}, '%')</if>
+			</if>
+			<if test="name!=null and name!=''">
+				<if test="dbName == 'oracle'">
+					and a.name like '%'||#{name}||'%'
+				</if>
+				<if test="dbName == 'mysql'">
+					and a.name like CONCAT('%', #{name}, '%')
+				</if>
+			</if>
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				and org.FULL_ORG_CODES like 
+				<if test="dbName == 'oracle'">#{fullOrgCodes}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{fullOrgCodes}, '%')</if>
+			</if>
+			<if test="orgCode != null and orgCode !='' ">
+				and org.org_code = #{orgCode}
+			</if>
+		</where>
+		order by a.SHOWORDER
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysRole">
+		SELECT 
+			<include refid="sysRoleColumns"/>
+		FROM fbidp_sys_role a
+		<include refid="sysRoleJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="code!=null and code!=''">
+				and a.CODE = #{code}
+			</if>
+			<if test="name!=null and name!=''">
+				<if test="dbName == 'oracle'">
+					and a.name like '%'||#{name}||'%'
+				</if>
+				<if test="dbName == 'mysql'">
+					and a.name like CONCAT('%', #{name}, '%')
+				</if>
+			</if>
+			<if test="fullOrgCodes != null and fullOrgCodes !='' ">
+				and org.FULL_ORG_CODES like 
+				<if test="dbName == 'oracle'">#{fullOrgCodes}||'%'</if>
+				<if test="dbName == 'mysql'">CONCAT(#{fullOrgCodes}, '%')</if>
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO fbidp_sys_role(
+			ID , 
+			CODE , 
+			NAME , 
+			ORG_ID , 
+			SHOWORDER , 
+			SCOPE , 
+			ENABLE_FLAG , 
+			DEL_FLAG , 
+			CREATE_BY , 
+			CREATE_DATE , 
+			UPDATE_BY , 
+			UPDATE_DATE , 
+			REMARKS 
+		) values(
+			#{id} , 
+			#{code} , 
+			#{name} , 
+			#{orgId} , 
+			#{showOrder} , 
+			#{scope} , 
+			#{enableFlag} , 
+			#{delFlag} , 
+			#{createBy} , 
+			#{createDate} , 
+			#{updateBy} , 
+			#{updateDate} , 
+			#{remarks} 
+		)
+	</insert>
+	
+	<update id="update">
+		update fbidp_sys_role
+		<set>
+			CODE = #{code} ,
+			NAME = #{name} ,
+			ORG_ID = #{orgId} ,
+			SHOWORDER = #{showOrder} ,
+			ENABLE_FLAG = #{enableFlag} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE fbidp_sys_role SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>
+

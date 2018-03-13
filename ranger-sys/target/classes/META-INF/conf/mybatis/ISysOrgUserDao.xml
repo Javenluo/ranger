@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javenluo.ranger.sys.dao.ISysOrgUserDao">
+	
+	<sql id="sysOrgUserColumns">
+			a.ID as "id" , 
+				a.ORG_ID as "orgId" , 
+				a.USER_ID as "userId" , 
+				a.REMARKS as "remarks" , 
+				a.ENABLE_FLAG as "enableFlag" , 
+				a.DEL_FLAG as "delFlag" , 
+				a.CREATE_BY as "createBy" , 
+				a.CREATE_DATE as "createDate" , 
+				a.UPDATE_BY as "updateBy" , 
+			    a.UPDATE_DATE as "updateDate"
+	</sql>
+	
+	<sql id="sysOrgUserJoins">
+	</sql>
+	
+	<select id="get" resultType="com.javenluo.ranger.sys.entity.SysOrgUser">
+		SELECT 
+			<include refid="sysOrgUserColumns"/>
+		FROM FBIDP_SYS_ORG_USER a
+		<include refid="sysOrgUserJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findCount" resultType="java.lang.Long">
+		SELECT 
+			count(1)		
+		FROM FBIDP_SYS_ORG_USER a
+		<include refid="sysOrgUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<select id="findList" resultType="com.javenluo.ranger.sys.entity.SysOrgUser">
+		SELECT 
+			<include refid="sysOrgUserColumns"/>
+		FROM FBIDP_SYS_ORG_USER a
+		<include refid="sysOrgUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<select id="findAllList" resultType="com.javenluo.ranger.sys.entity.SysOrgUser">
+		SELECT 
+			<include refid="sysOrgUserColumns"/>
+		FROM FBIDP_SYS_ORG_USER a
+		<include refid="sysOrgUserJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			
+		</where>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO FBIDP_SYS_ORG_USER(
+			ID ,
+				ORG_ID ,
+				USER_ID ,
+				REMARKS ,
+				ENABLE_FLAG ,
+				DEL_FLAG ,
+				CREATE_BY ,
+				CREATE_DATE ,
+				UPDATE_BY ,
+				UPDATE_DATE
+			) values(
+    		#{id} , 
+	    		#{orgId} , 
+	    		#{userId} , 
+	    		#{remarks} , 
+	    		#{enableFlag} , 
+	    		#{delFlag} , 
+	    		#{createBy} , 
+	    		#{createDate} , 
+	    		#{updateBy} , 
+	    		#{updateDate} 
+			)
+	</insert>
+	
+	<update id="update">
+		update FBIDP_SYS_ORG_USER
+		<set>
+			ORG_ID = #{orgId} ,
+			USER_ID = #{userId} ,
+			update_by = #{updateBy},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="delete" >
+		UPDATE FBIDP_SYS_ORG_USER SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<where> 
+			<if test="id!=null and id!=''">
+				and id = #{id}
+			</if>
+			<if test="orgId != null and orgId != ''">
+				and ORG_ID = #{orgId}
+			</if>
+			<if test="userId != null and userId != ''">
+				and user_id = #{userId}
+			</if>
+		</where>
+	</delete>
+	
+	<select id="queryGrantOrgById" resultType="com.javenluo.ranger.sys.entity.SysOrg">
+		SELECT 
+		   org.id,
+		   org.ORG_CODE orgcode,
+		   org.FULL_ORG_CODES fullOrgCodes,
+		   org.FULL_ORG_NAMES fullOrgNames,
+		   org.PARENT_ORG_ID parentOrgId,
+       	   org.PARENT_ORG_CODE parentOrgCode
+		FROM FBIDP_SYS_ORG_USER a,
+		     FBIDP_SYS_ORG org
+		<where>
+			a.org_id=org.id
+			and a.del_flag = #{DEL_FLAG_NORMAL}
+			and org.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="userId != null and userId != ''">
+				and a.user_id = #{userId}
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="queryOrgNameByOrgCode" resultType="java.lang.String">
+		SELECT 
+		   org.ORG_SHORT_NAME orgName
+		FROM FBIDP_SYS_ORG org
+		<where>
+			org.ORG_CODE = #{orgCode}
+		</where>
+	</select>
+
+</mapper>
+
