@@ -11,9 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javenluo.ranger.common.web.BaseController;
-import com.javenluo.ranger.sys.entity.SysMenu;
-import com.javenluo.ranger.sys.service.SysMenuService;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -24,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.foresee.fbidp.common.persistence.Page;
 import com.github.pagehelper.util.StringUtil;
+import com.javenluo.ranger.common.persistence.Page;
+import com.javenluo.ranger.common.web.BaseController;
+import com.javenluo.ranger.sys.entity.SysMenu;
+import com.javenluo.ranger.sys.service.SysMenuService;
 
 /**
  * <pre>

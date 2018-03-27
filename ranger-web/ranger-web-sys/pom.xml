@@ -3,14 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+     	<groupId>com.javenluo</groupId>
         <artifactId>ranger-web</artifactId>
-        <groupId>com.javenluo</groupId>
         <version>1.0</version>
+       	<relativePath>../ranger</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.javenluo</groupId>
-    <artifactId>ranger-web-sys</artifactId>
+	<artifactId>ranger-web-sys</artifactId>
+	<packaging>war</packaging>
+	<name>ranger-web-sys</name>
+	<url>http://maven.apache.org</url>
 
     <dependencies>
         <dependency>

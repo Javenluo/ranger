@@ -22,11 +22,11 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Service;
 
-import com.foresee.fbidp.common.config.Global;
-import com.foresee.fbidp.common.utils.Encodes;
-import com.foresee.fbidp.common.utils.SpringContextHolder;
-import com.foresee.fbidp.common.utils.StringUtils;
-import com.foresee.fbidp.common.web.Servlets;
+import com.javenluo.ranger.common.config.Global;
+import com.javenluo.ranger.common.utils.Encodes;
+import com.javenluo.ranger.common.utils.SpringContextHolder;
+import com.javenluo.ranger.common.utils.StringUtils;
+import com.javenluo.ranger.common.web.Servlets;
 import com.javenluo.ranger.sys.entity.SysMenu;
 import com.javenluo.ranger.sys.entity.SysRole;
 import com.javenluo.ranger.sys.entity.SysUser;

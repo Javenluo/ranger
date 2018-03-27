@@ -9,10 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javenluo.ranger.common.web.BaseController;
-import com.javenluo.ranger.sys.entity.SysNotice;
-import com.javenluo.ranger.sys.service.SysNoticeService;
-import com.javenluo.ranger.sys.utils.UserUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +17,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.foresee.fbidp.common.persistence.Page;
+import com.javenluo.ranger.common.persistence.Page;
+import com.javenluo.ranger.common.web.BaseController;
+import com.javenluo.ranger.sys.entity.SysNotice;
+import com.javenluo.ranger.sys.service.SysNoticeService;
+import com.javenluo.ranger.sys.utils.UserUtils;
 
 /**
  * <pre>

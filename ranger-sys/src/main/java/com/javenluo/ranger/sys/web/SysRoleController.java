@@ -9,13 +9,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javenluo.ranger.common.web.BaseController;
-import com.javenluo.ranger.sys.entity.SysRole;
-import com.javenluo.ranger.sys.entity.SysRoleMenu;
-import com.javenluo.ranger.sys.entity.SysUser;
-import com.javenluo.ranger.sys.entity.SysUserRole;
-import com.javenluo.ranger.sys.service.SysRoleService;
-import com.javenluo.ranger.sys.utils.UserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.foresee.fbidp.common.config.Global;
-import com.foresee.fbidp.common.persistence.Page;
+import com.javenluo.ranger.common.config.Global;
+import com.javenluo.ranger.common.persistence.Page;
+import com.javenluo.ranger.common.web.BaseController;
+import com.javenluo.ranger.sys.entity.SysRole;
+import com.javenluo.ranger.sys.entity.SysRoleMenu;
+import com.javenluo.ranger.sys.entity.SysUser;
+import com.javenluo.ranger.sys.entity.SysUserRole;
+import com.javenluo.ranger.sys.service.SysRoleService;
+import com.javenluo.ranger.sys.utils.UserUtils;
 
 /**
  * <pre>

@@ -5,22 +5,26 @@ package com.javenluo.ranger.sys.service;
 
 import java.util.List;
 
-import com.javenluo.ranger.common.service.CrudService;
-import com.foresee.ranger.sys.entity.*;
-import com.javenluo.ranger.sys.entity.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.foresee.fbidp.common.persistence.Page;
-import com.foresee.fbidp.common.utils.CacheUtils;
+import com.javenluo.ranger.common.persistence.Page;
+import com.javenluo.ranger.common.service.CrudService;
+import com.javenluo.ranger.common.utils.CacheUtils;
 import com.javenluo.ranger.sys.dao.ISysLoginDao;
 import com.javenluo.ranger.sys.dao.ISysOrgUserDao;
 import com.javenluo.ranger.sys.dao.ISysUserDao;
 import com.javenluo.ranger.sys.dao.ISysUserRoleDao;
 import com.javenluo.ranger.sys.dao.ISysWbxtDao;
+import com.javenluo.ranger.sys.entity.SysBmfzr;
+import com.javenluo.ranger.sys.entity.SysLogin;
+import com.javenluo.ranger.sys.entity.SysOrg;
+import com.javenluo.ranger.sys.entity.SysOrgUser;
 import com.javenluo.ranger.sys.entity.SysUser;
+import com.javenluo.ranger.sys.entity.SysUserRole;
+import com.javenluo.ranger.sys.entity.SysWbxt;
 import com.javenluo.ranger.sys.utils.UserUtils;
 
 /**

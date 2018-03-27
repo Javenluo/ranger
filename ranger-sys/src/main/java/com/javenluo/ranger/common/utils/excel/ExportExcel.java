@@ -32,11 +32,11 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.Lists;
 import com.javenluo.ranger.common.utils.Encodes;
 import com.javenluo.ranger.common.utils.Reflections;
 import com.javenluo.ranger.common.utils.excel.annotation.ExcelField;
-import com.javaluo.ranger.sys.utils.DictUtils;
-import com.google.common.collect.Lists;
+import com.javenluo.ranger.sys.utils.DictUtils;
 
 /**
  * 导出Excel文件（导出“XLSX”格式，支持大数据量导出   @see org.apache.poi.ss.SpreadsheetVersion）

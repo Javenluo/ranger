@@ -6,10 +6,6 @@ package com.javenluo.ranger.sys.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javenluo.ranger.common.web.BaseController;
-import com.javenluo.ranger.sys.entity.SysUser;
-import com.javenluo.ranger.sys.service.SysUserService;
-import com.javenluo.ranger.sys.utils.UserUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.druid.util.StringUtils;
-import com.foresee.fbidp.common.persistence.Page;
+import com.javenluo.ranger.common.persistence.Page;
+import com.javenluo.ranger.common.web.BaseController;
+import com.javenluo.ranger.sys.entity.SysUser;
+import com.javenluo.ranger.sys.service.SysUserService;
+import com.javenluo.ranger.sys.utils.UserUtils;
 
 /**
  * <pre>

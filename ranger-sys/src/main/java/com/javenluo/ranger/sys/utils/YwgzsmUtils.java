@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.javenluo.ranger.sys.entity.SysYwgzsm;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.foresee.fbidp.common.utils.CacheUtils;
-import com.foresee.fbidp.common.utils.SpringContextHolder;
-import com.javenluo.ranger.sys.dao.ISysYwgzsmDao;
 import com.google.common.collect.Maps;
+import com.javenluo.ranger.common.utils.CacheUtils;
+import com.javenluo.ranger.common.utils.SpringContextHolder;
+import com.javenluo.ranger.sys.dao.ISysYwgzsmDao;
+import com.javenluo.ranger.sys.entity.SysYwgzsm;
 
 /**
  * 业务规则工具类

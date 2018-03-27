@@ -6,24 +6,21 @@ import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javenluo.ranger.common.service.BaseService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import com.foresee.fbidp.common.utils.DateUtils;
-import com.foresee.fbidp.common.utils.RequestUtil;
+import com.javenluo.ranger.common.service.BaseService;
+import com.javenluo.ranger.common.utils.DateUtils;
+import com.javenluo.ranger.common.utils.RequestUtil;
 import com.javenluo.ranger.sys.utils.LogUtils;
 
 
 /**
  * 日志拦截器
- * @author gulong
+ * @author javenluo
  * @version 2014-8-19
  */
 public class LogInterceptor extends BaseService implements HandlerInterceptor {

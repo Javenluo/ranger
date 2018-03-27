@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.foresee.fbidp.common.config.Global;
+import com.javenluo.ranger.common.config.Global;
 
 public class WebContextListener extends org.springframework.web.context.ContextLoaderListener {
 	

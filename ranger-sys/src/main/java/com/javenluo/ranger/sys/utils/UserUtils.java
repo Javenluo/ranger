@@ -3,9 +3,6 @@ package com.javenluo.ranger.sys.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.foresee.ranger.sys.dao.*;
-import com.javenluo.ranger.sys.dao.*;
-import com.javenluo.ranger.sys.security.SystemAuthorizingRealm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
@@ -13,15 +10,21 @@ import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-import com.foresee.fbidp.common.utils.CacheUtils;
-import com.foresee.fbidp.common.utils.SpringContextHolder;
+import com.javenluo.ranger.common.utils.CacheUtils;
+import com.javenluo.ranger.common.utils.SpringContextHolder;
+import com.javenluo.ranger.sys.dao.ISysLoginDao;
+import com.javenluo.ranger.sys.dao.ISysMenuDao;
+import com.javenluo.ranger.sys.dao.ISysOrgUserDao;
 import com.javenluo.ranger.sys.dao.ISysRoleDao;
+import com.javenluo.ranger.sys.dao.ISysUserDao;
+import com.javenluo.ranger.sys.dao.ISysUserRoleDao;
 import com.javenluo.ranger.sys.entity.SysMenu;
 import com.javenluo.ranger.sys.entity.SysOrg;
 import com.javenluo.ranger.sys.entity.SysOrgUser;
 import com.javenluo.ranger.sys.entity.SysRole;
 import com.javenluo.ranger.sys.entity.SysUser;
 import com.javenluo.ranger.sys.entity.SysUserRole;
+import com.javenluo.ranger.sys.security.SystemAuthorizingRealm;
 
 
 /**

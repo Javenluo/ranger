@@ -7,12 +7,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javenluo.ranger.common.web.BaseController;
-import com.javenluo.ranger.sys.entity.SysUser;
-import com.javenluo.ranger.sys.security.FormAuthenticationFilter;
-import com.javenluo.ranger.sys.security.SystemAuthorizingRealm;
-import com.javenluo.ranger.sys.service.SystemService;
-import com.javenluo.ranger.sys.utils.UserUtils;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.web.util.WebUtils;
@@ -24,12 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.foresee.fbidp.common.config.Global;
-import com.foresee.fbidp.common.utils.CacheUtils;
-import com.foresee.fbidp.common.utils.CookieUtils;
-import com.foresee.fbidp.common.utils.IdGen;
-import com.foresee.fbidp.common.utils.StringUtils;
+import com.javenluo.ranger.common.config.Global;
+import com.javenluo.ranger.common.utils.CacheUtils;
+import com.javenluo.ranger.common.utils.CookieUtils;
+import com.javenluo.ranger.common.utils.IdGen;
+import com.javenluo.ranger.common.utils.StringUtils;
+import com.javenluo.ranger.common.web.BaseController;
 import com.javenluo.ranger.sys.dao.ISysLoginDao;
+import com.javenluo.ranger.sys.entity.SysUser;
+import com.javenluo.ranger.sys.security.FormAuthenticationFilter;
+import com.javenluo.ranger.sys.security.SystemAuthorizingRealm;
+import com.javenluo.ranger.sys.service.SystemService;
+import com.javenluo.ranger.sys.utils.UserUtils;
 
 
 /**

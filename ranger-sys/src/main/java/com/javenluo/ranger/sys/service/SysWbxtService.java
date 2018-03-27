@@ -5,15 +5,15 @@ package com.javenluo.ranger.sys.service;
 
 import java.util.List;
 
-import com.javenluo.ranger.common.service.CrudService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.foresee.fbidp.common.config.Global;
-import com.foresee.fbidp.common.persistence.Page;
-import com.foresee.fbidp.common.utils.Encodes;
+import com.javenluo.ranger.common.config.Global;
+import com.javenluo.ranger.common.persistence.Page;
+import com.javenluo.ranger.common.service.CrudService;
+import com.javenluo.ranger.common.utils.Encodes;
 import com.javenluo.ranger.sys.dao.ISysUserDao;
 import com.javenluo.ranger.sys.dao.ISysWbxtDao;
 import com.javenluo.ranger.sys.entity.SysUser;

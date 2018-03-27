@@ -6,11 +6,11 @@ package com.javenluo.ranger.sys.entity;
 import java.util.Date;
 import java.util.Map;
 
-import com.javenluo.ranger.common.utils.excel.annotation.ExcelField;
 import org.springframework.web.util.HtmlUtils;
 
 import com.javenluo.ranger.common.persistence.DataEntity;
-import com.foresee.fbidp.common.utils.StringUtils;
+import com.javenluo.ranger.common.utils.StringUtils;
+import com.javenluo.ranger.common.utils.excel.annotation.ExcelField;
 
 import lombok.Data;
 

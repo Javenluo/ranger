@@ -8,19 +8,19 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.javenluo.ranger.sys.dao.ISysLogDao;
-import com.javenluo.ranger.sys.entity.SysLog;
-import com.javenluo.ranger.sys.entity.SysMenu;
-import com.javenluo.ranger.sys.entity.SysUser;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.method.HandlerMethod;
 
-import com.foresee.fbidp.common.config.Global;
-import com.foresee.fbidp.common.utils.CacheUtils;
-import com.foresee.fbidp.common.utils.Exceptions;
-import com.foresee.fbidp.common.utils.SpringContextHolder;
-import com.foresee.fbidp.common.utils.StringUtils;
+import com.javenluo.ranger.common.config.Global;
+import com.javenluo.ranger.common.utils.CacheUtils;
+import com.javenluo.ranger.common.utils.Exceptions;
+import com.javenluo.ranger.common.utils.SpringContextHolder;
+import com.javenluo.ranger.common.utils.StringUtils;
+import com.javenluo.ranger.sys.dao.ISysLogDao;
 import com.javenluo.ranger.sys.dao.ISysMenuDao;
+import com.javenluo.ranger.sys.entity.SysLog;
+import com.javenluo.ranger.sys.entity.SysMenu;
+import com.javenluo.ranger.sys.entity.SysUser;
 
 /**
  * 字典工具类

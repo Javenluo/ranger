@@ -14,8 +14,8 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.foresee.fbidp.common.utils.RequestUtil;
-import com.foresee.fbidp.common.utils.StringUtils;
+import com.javenluo.ranger.common.utils.RequestUtil;
+import com.javenluo.ranger.common.utils.StringUtils;
 import com.javenluo.ranger.sys.security.SystemAuthorizingRealm.Principal;
 import com.javenluo.ranger.sys.utils.UserUtils;
 
