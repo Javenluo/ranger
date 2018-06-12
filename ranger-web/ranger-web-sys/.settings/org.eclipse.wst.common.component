@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ranger">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="ranger-sys-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ranger-sys/ranger-sys">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ranger-common-security-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ranger-common-security/ranger-common-security">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ranger-common-ssm-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ranger-common-ssm/ranger-common-ssm">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ranger-rest-authorization-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ranger-rest-authorization/ranger-rest-authorization">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ranger-scheduler-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ranger-scheduler/ranger-scheduler">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/" handle="module:/overlay/prj/ranger-web-common?includes=**/**&amp;excludes=META-INF/MANIFEST.MF">
+            <dependency-type>consumes</dependency-type>
+        </dependent-module>
+        <dependent-module deploy-path="/" handle="module:/overlay/slf/?includes=**/**&amp;excludes=META-INF/MANIFEST.MF">
+            <dependency-type>consumes</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="ranger"/>
+        <property name="java-output-path" value="/ranger-web-sys/target/classes"/>
+    </wb-module>
+</project-modules>
