@@ -38,11 +38,5 @@
         <setting name="jdbcTypeForNull" value="NULL"/>
                 
          <setting name="logImpl" value="LOG4J"/>
-	</settings>
-	
-	<!-- 自定义类型转换器 -->
-	<!-- <typeHandlers>
-		 <typeHandler handler="com.foresee.fbidp.bpm.handler.ClobTypeHandler"/>
-	</typeHandlers> -->
-	
+	</settings>	
 </configuration>

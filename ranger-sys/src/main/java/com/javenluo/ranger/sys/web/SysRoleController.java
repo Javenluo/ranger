@@ -166,7 +166,7 @@ public class SysRoleController extends BaseController {
 	@RequestMapping(value = {"roleYxUser"})
 	@ResponseBody
 	public Page<SysUser> roleYxUser(SysUser entity,HttpServletRequest request, HttpServletResponse response) {
-		String orgId = Global.getConfig("fbidp.top.orgId");
+		String orgId = Global.getConfig("ranger.top.orgId");
 		if (orgId.equals(entity.getOrgId())
 				&& (StringUtils.isNotEmpty(entity.getLoginId()) || StringUtils.isNotEmpty(entity.getName()))) {
 			entity.setOrgId(null);
@@ -186,7 +186,7 @@ public class SysRoleController extends BaseController {
 	@RequestMapping(value = {"roleWxUser"})
 	@ResponseBody
 	public Page<SysUser> roleWxUser(SysUser entity,HttpServletRequest request, HttpServletResponse response) {
-		String orgId = Global.getConfig("fbidp.top.orgId");
+		String orgId = Global.getConfig("ranger.top.orgId");
 		if (orgId.equals(entity.getOrgId())
 				&& (StringUtils.isNotEmpty(entity.getLoginId()) || StringUtils.isNotEmpty(entity.getName()))) {
 			entity.setOrgId(null);

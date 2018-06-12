@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<sys:panel>
-			<blockquote class="layui-elem-quote">Fbidp - 用心与你沟通，精心为你雕琢</blockquote>
+			<blockquote class="layui-elem-quote">Javenluo</blockquote>
 		</sys:panel>
 	
 		

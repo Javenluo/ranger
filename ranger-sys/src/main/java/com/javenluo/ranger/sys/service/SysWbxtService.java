@@ -71,7 +71,7 @@ public class SysWbxtService extends CrudService<ISysWbxtDao,SysWbxt> {
 		user.setLoginId(entity.getXtbm());
 		user.setName(entity.getXtmc());
 		user.setPasswd(entity.getXtmm());
-		user.setOrgId(Global.getConfig("fbidp.top.orgId")); // 默认顶级机构
+		user.setOrgId(Global.getConfig("ranger.top.orgId")); // 默认顶级机构
 		sysUserService.insert(user); // 新增角色
 		
 		

@@ -1,7 +1,7 @@
 package com.javenluo.ranger.scheduler.dao;
 
-import com.foresee.fbidp.common.persistence.CrudDao;
-import com.foresee.fbidp.common.persistence.annotation.MyBatisDao;
+import com.javenluo.ranger.common.persistence.CrudDao;
+import com.javenluo.ranger.common.persistence.annotation.MyBatisDao;
 import com.javenluo.ranger.scheduler.entity.SchedulerList;
 
 /**

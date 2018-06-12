@@ -11,7 +11,7 @@ import org.quartz.JobExecutionException;
  */
 public class TestJob implements Job {
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-		System.out.println("==========================Fbidp默认测试job==========================");
+		System.out.println("==========================Ranger默认测试job==========================");
 		System.out.println(arg0.getJobDetail());
 		System.out.println("===================================================================");
 	}

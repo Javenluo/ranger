@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.javenluo</groupId>
     <artifactId>ranger-rest-authorization</artifactId>
 
     <properties>
@@ -23,8 +22,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.foresee</groupId>
-            <artifactId>fbidp-sys</artifactId>
+            <groupId>com.javenluo</groupId>
+            <artifactId>ranger-sys</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>

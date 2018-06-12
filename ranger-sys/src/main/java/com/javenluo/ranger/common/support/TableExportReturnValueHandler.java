@@ -75,7 +75,7 @@ public class TableExportReturnValueHandler implements HandlerMethodReturnValueHa
 				ExportExcel ee = new ExportExcel(fileName, page.getEntityClass());
 				ee.setDataList(page.getRows());
 
-				ee.writeFile(Global.getConfig("fbidp.tmp.dir") + File.separator + fileId).dispose();
+				ee.writeFile(Global.getConfig("ranger.tmp.dir") + File.separator + fileId).dispose();
 
 				response.getWriter().write(fileId);
 			}

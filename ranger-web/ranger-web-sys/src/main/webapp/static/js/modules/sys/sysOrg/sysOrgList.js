@@ -104,19 +104,19 @@ function okFunction(){
 		formData.enableFlag = "0";
 	}
 	if($.trim(formData.orgCode)==""){
-		fbidp.utils.alertWarn("机构编码不能为空，请填写！");
+		ranger.utils.alertWarn("机构编码不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.orgName)==""){
-		fbidp.utils.alertWarn("机构名称不能为空，请填写！");
+		ranger.utils.alertWarn("机构名称不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.orgShortName)==""){
-		fbidp.utils.alertWarn("机构简称不能为空，请填写！");
+		ranger.utils.alertWarn("机构简称不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.showOrder)==""){
-		fbidp.utils.alertWarn("排列顺序不能为空，请填写！");
+		ranger.utils.alertWarn("排列顺序不能为空，请填写！");
 		return false;
 	}
 	
@@ -124,7 +124,7 @@ function okFunction(){
 	if($.trim(formData.orgCode)!=$.trim(formData.oldOrgCode)){
 		$.post(ctx+"/sys/sysOrg/checkExsit4OrgCode",formData,function(data){
 			if(data){
-				fbidp.utils.alertWarn("机构编码已经存在，请修改！");
+				ranger.utils.alertWarn("机构编码已经存在，请修改！");
 			}else{
 				saveData(varUrl,formData)
 			}
@@ -135,12 +135,12 @@ function okFunction(){
 }
 
 function saveData(varUrl,formData){
-	fbidp.utils.confirm("确定要提交数据吗?", function(r) {
+	ranger.utils.confirm("确定要提交数据吗?", function(r) {
 		if (r) {
 			$.post(varUrl,formData,function(data){
 				if(data.success){
-					fbidp.utils.alertInfo("操作成功！",function(){
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！",function(){
+						ranger.utils.close();
 						
 						var row = $('#tt').treegrid('find',formData.parentOrgId);
 						if(row.state == 'open' && row.children.length == 0 ){
@@ -158,7 +158,7 @@ function saveData(varUrl,formData){
 						
 					});
 				}else{
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			},"json");
 		}
@@ -172,13 +172,13 @@ function delete_(orgId){
 	var child = $('#tt').treegrid('getChildren',orgId);
 	var row = $('#tt').treegrid('find',orgId);
 	if(row.state != 'open' || child.length >0 ){
-		fbidp.utils.alertWarn("包含子机构，不允许删除！");
+		ranger.utils.alertWarn("包含子机构，不允许删除！");
 	}else{
-		fbidp.utils.confirm("确定要删除选中的数据吗?", function(r) {
+		ranger.utils.confirm("确定要删除选中的数据吗?", function(r) {
 			if (r) {
 				$.post(ctx+"/sys/sysOrg/delete",{id:orgId},function(data){
 					if(data.success){
-						fbidp.utils.alertInfo("删除机构成功！");
+						ranger.utils.alertInfo("删除机构成功！");
 						var parent = $("#tt").treegrid('getParent',orgId);
 						var children = $("#tt").treegrid('getChildren',parent.id);
 						if(children.length == 1){ // 判断刷新树表格
@@ -187,7 +187,7 @@ function delete_(orgId){
 							$("#tt").treegrid('reload',parent.id);
 						}
 					}else{
-						fbidp.utils.alertError("操作失败，请联系系统管理员！");
+						ranger.utils.alertError("操作失败，请联系系统管理员！");
 					}
 				});
 			 }

@@ -215,8 +215,8 @@
     <![endif]-->  
  	<script type="text/javascript" src="${ctxStatic}/uimaker/menu.js"></script>
     <script type="text/javascript" src="${ctxStatic}/uimaker/main.js"></script>
-    <script src="${ctxStatic}/js/fbidp.js"></script>
-	<script src="${ctxStatic}/js/fbidp-ui.js"></script>
+    <script src="${ctxStatic}/js/ranger.js"></script>
+	<script src="${ctxStatic}/js/ranger-ui.js"></script>
     <script type="text/javascript" src="${ctxStatic}/js/modules/sys/sysIndex.js"></script>
     
     <script type="text/javascript">

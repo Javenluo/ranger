@@ -1,7 +1,7 @@
 package com.javenluo.ranger.scheduler.entity;
 
-import com.foresee.fbidp.common.persistence.DataEntity;
-import com.foresee.fbidp.common.utils.excel.annotation.ExcelField;
+import com.javenluo.ranger.common.persistence.DataEntity;
+import com.javenluo.ranger.common.utils.excel.annotation.ExcelField;
 
 import lombok.Data;
 

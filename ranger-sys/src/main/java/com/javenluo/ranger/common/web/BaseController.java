@@ -37,10 +37,10 @@ public abstract class BaseController {
 	 */
 	protected Log logger = LogFactory.getLog(getClass());
 	
-	@Value("${fbidp.top.orgCode}")
+	@Value("${ranger.top.orgCode}")
 	public String topOrgCode;
 	
-	@Value("${fbidp.top.orgId}")
+	@Value("${ranger.top.orgId}")
 	public String topOrgId;
 
 	/**
@@ -52,19 +52,19 @@ public abstract class BaseController {
 	/**
 	 * 前端URL后缀
 	 */
-	@Value("${fbidp.tmp.dir}")
+	@Value("${ranger.tmp.dir}")
 	protected String tmpDir;
 	
 	/**
 	 * 流程租户ID
 	 */
-	@Value("${fbidp.workflow.bpmTenandId}")
+	@Value("${ranger.workflow.bpmTenandId}")
 	protected String bpmTenandId;
 	
 	/**
 	 * 流程租户ID
 	 */
-	@Value("${fbidp.workflow.bpmManagerRoleId}")
+	@Value("${ranger.workflow.bpmManagerRoleId}")
 	protected String bpmManagerRoleId;
 	
 	/**

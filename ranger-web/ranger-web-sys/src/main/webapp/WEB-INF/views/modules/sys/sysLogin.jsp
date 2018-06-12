@@ -16,8 +16,8 @@
 	<script src="${ctxStatic}/jquery-easyui-1.5/jquery.easyui.all.js"></script>
 	<script src="${ctxStatic}/layer/layer.js"></script>
 	<script src="${ctxStatic}/layui/layui.js"></script>
-	<script src="${ctxStatic}/js/fbidp.js"></script>
-	<script src="${ctxStatic}/js/fbidp-ui.js"></script>
+	<script src="${ctxStatic}/js/ranger.js"></script>
+	<script src="${ctxStatic}/js/ranger-ui.js"></script>
 	
 	<script type="text/javascript">
 		var ctx = '${ctx}';
@@ -95,7 +95,7 @@
 									if(users.length == 1){
 										login(users[0].id,users[0].loginId);
 									} else {
-										fbidp.utils.alertWarn("请选取一条数据进行操作！");
+										ranger.utils.alertWarn("请选取一条数据进行操作！");
 										return;
 									}
 								},
@@ -111,7 +111,7 @@
 							});
 						}
 					} else {
-						fbidp.utils.alertError(data.message);
+						ranger.utils.alertError(data.message);
 					}
 				},"json");
 			}

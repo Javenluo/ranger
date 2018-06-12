@@ -70,7 +70,7 @@ $.extend($.fn.datagrid.defaults, {
 	}
 });
 
-var fbidp = {
+var ranger = {
 	utils : {
 		alertWarn : function(msg, f ){
 			if(f!=null && "function" == typeof f){

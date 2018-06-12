@@ -76,10 +76,10 @@ function edit(){
 	
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -125,7 +125,7 @@ function edit(){
 function delete_() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}
 	
@@ -134,16 +134,16 @@ function delete_() {
 		ids.push(rows[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要删除选中的数据吗?", function(r) {
+	ranger.utils.confirm("确定要删除选中的数据吗?", function(r) {
 		if (r) {
 			$.post(ctx+"/sys/sysYwgzsm/delete", {ids : ids.join('&') }, function(result) {
 				if (result.success) {
-					fbidp.utils.alertInfo("操作成功！", function(){
+					ranger.utils.alertInfo("操作成功！", function(){
 						layer.closeAll();
 						query();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员");
+					ranger.utils.alertError("操作失败,请联系系统管理员");
 				}
 			});
 		}
@@ -166,11 +166,11 @@ function okFunction(){
 	
 	//表单验证
 	if($.trim($("#dialogForm #ywgzBm").val())==""){
-		fbidp.utils.alertWarn("规则编码不能为空，请填写！");
+		ranger.utils.alertWarn("规则编码不能为空，请填写！");
 		return false;
 	}
 	if($("#dialogForm #ywgzBm").val().length>32){
-		fbidp.utils.alertWarn("规则编码超出长度，请重新填写！");
+		ranger.utils.alertWarn("规则编码超出长度，请重新填写！");
 		return false;
 	}
 	//获得编辑器带格式的文本
@@ -179,7 +179,7 @@ function okFunction(){
 	var text = UE.getEditor('uEditor').getContentTxt();
 	
 	if($.trim(content)==""){
-		fbidp.utils.alertWarn("规则说明不能为空，请填写！");
+		ranger.utils.alertWarn("规则说明不能为空，请填写！");
 		return false;
 	}
 
@@ -187,17 +187,17 @@ function okFunction(){
 	var formData = $.extend(formData,{'ywgzSm':text, 'ywgzSmFwb':content});
 	$.post(ctx+'/sys/sysYwgzsm/checkYwgzBm',formData,function(data){
 		if(isFlag=='add'&& !data.success){
-			fbidp.utils.alertWarn("已存在该规则编码，请从新填写！");
+			ranger.utils.alertWarn("已存在该规则编码，请从新填写！");
 			return false;
 		}
 		$.post(varUrl,formData,function(data){  //表单提交
 			if(data.success){
-				fbidp.utils.alertInfo("操作成功！",function(){
+				ranger.utils.alertInfo("操作成功！",function(){
 					layer.closeAll();
 					query();
 				});
 			}else{
-				fbidp.utils.alertError("操作失败,请联系系统管理员！");
+				ranger.utils.alertError("操作失败,请联系系统管理员！");
 			}
 		},"json");
 	},"json");

@@ -7,7 +7,7 @@
 	
 	<session-descriptor>
 	   <timeout-secs>1800</timeout-secs>
-	   <cookie-path>/fbidp</cookie-path>
+	   <cookie-path>/ranger</cookie-path>
 	</session-descriptor>
 
 	<jsp-descriptor>
@@ -22,6 +22,6 @@
 		<show-archived-real-path-enabled>true</show-archived-real-path-enabled>	
 	</container-descriptor>
 
-	<context-root>fbidp</context-root>
+	<context-root>ranger</context-root>
 
 </weblogic-web-app>

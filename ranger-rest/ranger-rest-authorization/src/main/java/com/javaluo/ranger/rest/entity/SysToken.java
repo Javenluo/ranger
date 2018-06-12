@@ -3,7 +3,9 @@
  */
 package com.javaluo.ranger.rest.entity;
 
-import com.foresee.fbidp.common.persistence.DataEntity;
+
+
+import com.javenluo.ranger.common.persistence.DataEntity;
 
 import lombok.Data;
 

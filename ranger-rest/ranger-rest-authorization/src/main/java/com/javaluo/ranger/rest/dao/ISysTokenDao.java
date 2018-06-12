@@ -5,9 +5,9 @@ package com.javaluo.ranger.rest.dao;
 
 import java.util.List;
 
-import com.foresee.fbidp.common.persistence.CrudDao;
-import com.foresee.fbidp.common.persistence.annotation.MyBatisDao;
 import com.javaluo.ranger.rest.entity.SysToken;
+import com.javenluo.ranger.common.persistence.CrudDao;
+import com.javenluo.ranger.common.persistence.annotation.MyBatisDao;
 
 /**
  * <pre>

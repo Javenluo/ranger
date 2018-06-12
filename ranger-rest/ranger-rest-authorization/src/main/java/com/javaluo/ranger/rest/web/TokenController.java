@@ -1,9 +1,5 @@
 package com.javaluo.ranger.rest.web;
 
-import com.javaluo.ranger.rest.authorization.annotation.Authorization;
-import com.javaluo.ranger.rest.authorization.annotation.CurrentUser;
-import com.javaluo.ranger.rest.authorization.manager.TokenManager;
-import com.javaluo.ranger.rest.entity.ResponeResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.foresee.fbidp.common.utils.IdGen;
-import com.foresee.fbidp.sys.entity.SysUser;
-import com.foresee.fbidp.sys.service.SystemService;
+import com.javaluo.ranger.rest.authorization.annotation.Authorization;
+import com.javaluo.ranger.rest.authorization.annotation.CurrentUser;
+import com.javaluo.ranger.rest.authorization.manager.TokenManager;
+import com.javaluo.ranger.rest.entity.ResponeResult;
+import com.javenluo.ranger.common.utils.IdGen;
+import com.javenluo.ranger.sys.entity.SysUser;
+import com.javenluo.ranger.sys.service.SystemService;
+
 
 
 /**

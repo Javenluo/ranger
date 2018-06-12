@@ -10,34 +10,34 @@ function openPwdWin(userId){
 		btn1 : function() {
 			var formData = $("#resetPwdForm").serializeObject();
 			if($.trim(formData.passwd)==""){
-				fbidp.utils.alertWarn("旧密码不能为空，请填写！");
+				ranger.utils.alertWarn("旧密码不能为空，请填写！");
 				return false;
 			}
 			if($.trim(formData.newPasswd)==""){
-				fbidp.utils.alertWarn("新密码不能为空，请填写！");
+				ranger.utils.alertWarn("新密码不能为空，请填写！");
 				return false;
 			}
 			if($.trim(formData.newPassword2)==""){
-				fbidp.utils.alertWarn("确认密码不能为空，请填写！");
+				ranger.utils.alertWarn("确认密码不能为空，请填写！");
 				return false;
 			}
 			if(formData.newPasswd!=formData.newPassword2){
-				fbidp.utils.alertWarn("新密码二次输入不一致，请确认！");
+				ranger.utils.alertWarn("新密码二次输入不一致，请确认！");
 				return false;
 			}
 			
 			//验证旧密码输入是否正确
-			fbidp.utils.confirm("确定要修改密码吗?", function(r) {
+			ranger.utils.confirm("确定要修改密码吗?", function(r) {
 				if (r) {
 					$.post(ctx+"/sys/sysUser/checkPassword",formData,function(data){
 						if(data){
 							$.post(ctx+"/sys/sysUser/resetPwd",formData,function(result){
-								fbidp.utils.alertInfo("操作成功！",function(){
-									fbidp.utils.close();
+								ranger.utils.alertInfo("操作成功！",function(){
+									ranger.utils.close();
 								});
 							});
 						}else{
-							fbidp.utils.alertError("旧密码输入不正确，请修改！");
+							ranger.utils.alertError("旧密码输入不正确，请修改！");
 						}
 					});
 				}

@@ -34,7 +34,7 @@
 			<mvc:mapping path="${adminPath}/**" />
 			<mvc:exclude-mapping path="${adminPath}/"/>
 			<mvc:exclude-mapping path="${adminPath}/login"/>
-			<bean class="com.foresee.fbidp.sys.interceptor.LogInterceptor" />
+			<bean class="com.javenluo.ranger.sys.interceptor.LogInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 
@@ -84,7 +84,7 @@
     </mvc:annotation-driven>
     
     	<!--Spring中bean获取的工具类-->
-	<bean id="springContextUtils" class="com.foresee.fbidp.common.utils.SpringContextUtils" />
+	<bean id="springContextUtils" class="com.javenluo.ranger.common.utils.SpringContextUtils" />
      
 	<!--⑥相关的spring资源配置文件导入
 	<import resource="classpath:/META-INF/conf/spring/spring-resources.xml"/> 

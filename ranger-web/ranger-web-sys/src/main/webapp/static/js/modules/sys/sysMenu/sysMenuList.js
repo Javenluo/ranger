@@ -129,14 +129,14 @@ function okFunction(){
 		formData.visible = "0";
 	}
 	if($.trim(formData.name)==""){
-		fbidp.utils.alertWarn("菜单名称不能为空，请填写！");
+		ranger.utils.alertWarn("菜单名称不能为空，请填写！");
 		return false;
 	}
 
 	$.post(varUrl,formData,function(data){
 		if(data.success){
-			fbidp.utils.alertInfo("操作成功！",function(){
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！",function(){
+				ranger.utils.close();
 				
 				var parentId = $("#dialog #dialogForm #parentId").val();
 				if(parentId =="0"){
@@ -147,7 +147,7 @@ function okFunction(){
 				}
 			});
 		}else{
-			fbidp.utils.alertError(data.msg);
+			ranger.utils.alertError(data.msg);
 		}
 	},"json");
 	
@@ -200,13 +200,13 @@ function deleteMenu(menuId){
 	var child = $('#tt').treegrid('getChildren',menuId);
 	var row = $('#tt').treegrid('find',menuId);
 	if(row.state != 'open' || child.length >0 ){
-		fbidp.utils.alertWarn("包含子菜单，不允许删除！");
+		ranger.utils.alertWarn("包含子菜单，不允许删除！");
 	}else{
-		fbidp.utils.confirm("确定要删除选中的菜单吗？", function(r){	
+		ranger.utils.confirm("确定要删除选中的菜单吗？", function(r){	
 			 if(r){
 					$.post(ctx+"/sys/sysMenu/delete",{id:menuId},function(data){
 						if(data.success){
-							fbidp.utils.alertInfo("操作成功！", function(){
+							ranger.utils.alertInfo("操作成功！", function(){
 								var parent = $("#tt").treegrid('getParent',menuId);
 								if(parent.id == "0"){
 									$("#tt").treegrid('reload',parent.id);
@@ -214,11 +214,11 @@ function deleteMenu(menuId){
 									var grandP = $("#tt").treegrid('getParent',parent.id);
 									$("#tt").treegrid('reload',grandP.id);
 								}
-								fbidp.utils.close();
+								ranger.utils.close();
 							});
 							
 						}else{
-							fbidp.utils.alertError("操作失败,请联系系统管理员！");
+							ranger.utils.alertError("操作失败,请联系系统管理员！");
 						}
 					},"json");
 			 }
@@ -245,7 +245,7 @@ function openIconWin(){
 function setIconTxt(value){
 	$("#dialogForm #imageUrl").val(value);
 	
-	fbidp.utils.close(layer.index);
+	ranger.utils.close(layer.index);
 }
 
 //打开UEditor编辑器
@@ -323,11 +323,11 @@ function saveBzsm(menuId,value){
 		dataType : "json",
 		success : function(data) {
 			if(data == true){
-				fbidp.utils.alertInfo("操作成功！", function(){
-					fbidp.utils.close();
+				ranger.utils.alertInfo("操作成功！", function(){
+					ranger.utils.close();
 				});
 			}else{
-				fbidp.utils.alertError("操作失败,请联系系统管理员！");
+				ranger.utils.alertError("操作失败,请联系系统管理员！");
 			}
 		}
 	});

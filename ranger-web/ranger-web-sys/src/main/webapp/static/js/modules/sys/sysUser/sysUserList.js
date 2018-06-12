@@ -50,10 +50,10 @@ function add(){
 function edit(){
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -95,7 +95,7 @@ function edit(){
 function delete_() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}
 	
@@ -104,16 +104,16 @@ function delete_() {
 		ids.push(rows[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要删除选中的数据吗?", function(r) {
+	ranger.utils.confirm("确定要删除选中的数据吗?", function(r) {
 		if (r) {
 			$.post(ctx+"/sys/sysUser/delete", {ids : ids.join('&') }, function(result) {
 				if (result.success) {
-					fbidp.utils.alertInfo("操作成功！",function(){
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！",function(){
+						ranger.utils.close();
 						query();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}
@@ -136,19 +136,19 @@ function okFunction(){
 		formData.enableFlag = "0";
 	}
 	if($.trim(formData.loginId)==""){
-		fbidp.utils.alertWarn("登录账号不能为空，请填写！");
+		ranger.utils.alertWarn("登录账号不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.name)==""){
-		fbidp.utils.alertWarn("用户名称不能为空，请填写！");
+		ranger.utils.alertWarn("用户名称不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.orgId)==""){
-		fbidp.utils.alertWarn("所属机构不能为空，请选择！");
+		ranger.utils.alertWarn("所属机构不能为空，请选择！");
 		return false;
 	}
 	if($.trim(formData.showOrder)==""){
-		fbidp.utils.alertWarn("排列顺序不能为空，请填写！");
+		ranger.utils.alertWarn("排列顺序不能为空，请填写！");
 		return false;
 	}
 	
@@ -162,16 +162,16 @@ function okFunction(){
 }
 
 function saveData(varUrl,formData){
-	fbidp.utils.confirm("确定要提交数据吗?", function(r) {
+	ranger.utils.confirm("确定要提交数据吗?", function(r) {
 		if (r) {
 			$.post(varUrl,formData,function(data){
 				if(data.success){
-					fbidp.utils.alertInfo("操作成功！", function(){
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！", function(){
+						ranger.utils.close();
 						query();
 					});
 				}else{
-					fbidp.utils.alertError(data.msg);
+					ranger.utils.alertError(data.msg);
 				}
 			},"json");
 		}
@@ -198,10 +198,10 @@ function treeNodeClick(e,treeId,treeNode){
 function zdjs(){
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -232,10 +232,10 @@ function zdscjg(){
 	
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -261,10 +261,10 @@ function zdscjg(){
 function czmm(){
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -282,26 +282,26 @@ function czmm(){
 		btn1 : function() {
 			var formData = $("#resetPwdWin #resetPwdForm").serializeObject();
 			if($.trim(formData.newPasswd)==""){
-				fbidp.utils.alertWarn("新密码不能为空，请填写！");
+				ranger.utils.alertWarn("新密码不能为空，请填写！");
 				return false;
 			}
 			if($.trim(formData.confirmNewPwd)==""){
-				fbidp.utils.alertWarn("确认密码不能为空，请填写！");
+				ranger.utils.alertWarn("确认密码不能为空，请填写！");
 				return false;
 			}
 			if(formData.newPasswd != formData.confirmNewPwd){
-				fbidp.utils.alertWarn("两次输入的密码不一致，请确认！");
+				ranger.utils.alertWarn("两次输入的密码不一致，请确认！");
 				return false;
 			}
 
 			var varUrl = ctx+'/sys/sysUser/resetPwd';
 			$.post(varUrl,formData,function(data){
 				if(data.success){
-					fbidp.utils.alertInfo("操作成功！", function(){
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！", function(){
+						ranger.utils.close();
 					});
 				}else{
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			},"json");
 			
@@ -329,7 +329,7 @@ function cktj(){
 		btn1 : function(index) {
 			$('#kxjslb').datagrid("reload",$("#cktjForm").serializeObject());
 			$('#cktjForm')[0].reset();
-			fbidp.utils.close(index);
+			ranger.utils.close(index);
 		}
 	});
 }
@@ -337,7 +337,7 @@ function cktj(){
 function addRole(){
 	var rows = $("#kxjslb").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请在左侧选择要添加的角色！");
+		ranger.utils.alertWarn("请在左侧选择要添加的角色！");
 		return;
 	}
 	
@@ -346,16 +346,16 @@ function addRole(){
 		ids.push(rows[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要添加选中的角色吗?", function(r) {
+	ranger.utils.confirm("确定要添加选中的角色吗?", function(r) {
 		if (r) {
 			var userId = $('#roleForm #userId').val();
 			$.post(ctx+"/sys/sysUser/addUserRoles", {userId : userId, ids : ids.join('&') }, function(result) {
 				if (result.success) {
 					$('#kxjslb').datagrid("reload",$("#roleForm").serializeObject());
 					$('#yxjslb').datagrid("reload",$("#roleForm").serializeObject());
-					fbidp.utils.alertInfo("操作成功！");
+					ranger.utils.alertInfo("操作成功！");
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}
@@ -365,7 +365,7 @@ function addRole(){
 function removeRole(){
 	var rows = $("#yxjslb").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请在右侧选择要移除的角色！");
+		ranger.utils.alertWarn("请在右侧选择要移除的角色！");
 		return;
 	}
 	
@@ -374,16 +374,16 @@ function removeRole(){
 		ids.push(rows[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要移除选中的角色吗?", function(r) {
+	ranger.utils.confirm("确定要移除选中的角色吗?", function(r) {
 		if (r) {
 			var userId = $('#roleForm #userId').val();
 			$.post(ctx+"/sys/sysUser/removeUserRoles", {userId : userId, ids : ids.join('&') }, function(result) {
 				if (result.success) {
 					$('#kxjslb').datagrid("reload",$("#roleForm").serializeObject());
 					$('#yxjslb').datagrid("reload",$("#roleForm").serializeObject());
-					fbidp.utils.alertInfo("操作成功！");
+					ranger.utils.alertInfo("操作成功！");
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}
@@ -396,7 +396,7 @@ function addGrantOrg(){
 	var nodes = treeObj.getCheckedNodes();
 	
 	if (nodes.length == 0) {
-		fbidp.utils.alertWarn("请在左侧选择要授权的组织机构！");
+		ranger.utils.alertWarn("请在左侧选择要授权的组织机构！");
 		return;
 	}
 	
@@ -405,15 +405,15 @@ function addGrantOrg(){
 		ids.push(nodes[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要添加选中的组织机构吗?", function(r) {
+	ranger.utils.confirm("确定要添加选中的组织机构吗?", function(r) {
 		if (r) {
 			var userId = $('#grantOrgForm #userId').val();
 			$.post(ctx+"/sys/sysUser/addGrantOrg", {userId : userId, ids : ids.join('&') }, function(result) {
 				if (result.success) {
 					$('#yxGrantOrg').datagrid("reload",$("#grantOrgForm").serializeObject());
-					fbidp.utils.alertInfo("操作成功！");
+					ranger.utils.alertInfo("操作成功！");
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}
@@ -424,7 +424,7 @@ function addGrantOrg(){
 function removeGrantOrg(){
 	var rows = $("#yxGrantOrg").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请在右侧选择要移除的组织机构！");
+		ranger.utils.alertWarn("请在右侧选择要移除的组织机构！");
 		return;
 	}
 	
@@ -433,15 +433,15 @@ function removeGrantOrg(){
 		ids.push(rows[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要移除选中的组织机构吗?", function(r) {
+	ranger.utils.confirm("确定要移除选中的组织机构吗?", function(r) {
 		if (r) {
 			var userId = $('#grantOrgForm #userId').val();
 			$.post(ctx+"/sys/sysUser/removeGrantOrg", {userId : userId, ids : ids.join('&') }, function(result) {
 				if (result.success) {
 					$('#yxGrantOrg').datagrid("reload",$("#grantOrgForm").serializeObject());
-					fbidp.utils.alertInfo("操作成功！");
+					ranger.utils.alertInfo("操作成功！");
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}
@@ -496,7 +496,7 @@ function saveFunction() {
 	$("#saveForm").form('submit',{
 		url:ctx + '/sys/sysUser/import',
 		success:function(data){
-			fbidp.utils.alertInfo(data, function() {
+			ranger.utils.alertInfo(data, function() {
   				layer.closeAll();
   				query();
 			});   

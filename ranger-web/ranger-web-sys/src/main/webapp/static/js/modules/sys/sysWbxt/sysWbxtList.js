@@ -53,10 +53,10 @@ function add(){
 function edit(){
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -93,7 +93,7 @@ function edit(){
 function delete_() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取至少一条数据进行操作！");
+		ranger.utils.alertWarn("请选取至少一条数据进行操作！");
 		return;
 	}
 	
@@ -102,16 +102,16 @@ function delete_() {
 		ids.push(rows[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要删除选中的数据吗?", function(r) {
+	ranger.utils.confirm("确定要删除选中的数据吗?", function(r) {
 		if (r) {
 			$.post(ctx+"/sys/sysWbxt/delete", {ids : ids.join('&') }, function(result) {
 				if (result.success) {
-					fbidp.utils.alertInfo("操作成功！", function(){
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！", function(){
+						ranger.utils.close();
 						query();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员");
+					ranger.utils.alertError("操作失败,请联系系统管理员");
 				}
 			});
 		}
@@ -133,47 +133,47 @@ function okFunction(){
 	
 	//TODO: 请根据实际情况编写
 	if($.trim(formData.xtbm)==""){
-		fbidp.utils.alertWarn("系统编码不能为空，请填写！");
+		ranger.utils.alertWarn("系统编码不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.xtmc)==""){
-		fbidp.utils.alertWarn("系统名称不能为空，请填写！");
+		ranger.utils.alertWarn("系统名称不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.orgId)==""){
-		fbidp.utils.alertWarn("所属机构不能为空，请选择！");
+		ranger.utils.alertWarn("所属机构不能为空，请选择！");
 		return false;
 	}
 	if($.trim(formData.xtwz)==""){
-		fbidp.utils.alertWarn("系统网址不能为空，请填写！");
+		ranger.utils.alertWarn("系统网址不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.xtfzr)==""){
-		fbidp.utils.alertWarn("负责人不能为空，请选择！");
+		ranger.utils.alertWarn("负责人不能为空，请选择！");
 		return false;
 	}
 	if($.trim(formData.fxrlxdh)==""){
-		fbidp.utils.alertWarn("联系方式不能为空，请填写！");
+		ranger.utils.alertWarn("联系方式不能为空，请填写！");
 		return false;
 	}
 	
 	//手机号校验
 	var reg = /^\d{11}$/; //定义正则表达式
 	if(!reg.test(formData.fxrlxdh))  { 
-	    fbidp.utils.alertWarn("请输入有效的手机号码！");
+	    ranger.utils.alertWarn("请输入有效的手机号码！");
 	    return false; 
 	} 
 	
 	$.post(varUrl,formData,function(data){
 		if (data.success) {
-			fbidp.utils.alertInfo("操作成功！", function() {
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！", function() {
+				ranger.utils.close();
 				query();
 			});
 		} else if (!data.success) {
-			fbidp.utils.alertError(data.msg);
+			ranger.utils.alertError(data.msg);
 		} else {
-			fbidp.utils.alertError("操作失败,请联系系统管理员！");
+			ranger.utils.alertError("操作失败,请联系系统管理员！");
 		}
 	},"json");
 

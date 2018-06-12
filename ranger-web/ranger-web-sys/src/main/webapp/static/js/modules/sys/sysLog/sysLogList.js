@@ -42,10 +42,10 @@ function add(){
 function edit(){
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -72,7 +72,7 @@ function edit(){
 function delete_() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}
 	
@@ -81,16 +81,16 @@ function delete_() {
 		ids.push(rows[i].id);
 	}
 	
-	fbidp.utils.confirm("确定要删除选中的数据吗?", function(r) {
+	ranger.utils.confirm("确定要删除选中的数据吗?", function(r) {
 		if (r) {
 			$.post(ctx+"/sys/sysLog/delete", {ids : ids.join('&') }, function(result) {
 				if (result.success) {
-					fbidp.utils.alertInfo("操作成功！", function(){
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！", function(){
+						ranger.utils.close();
 						query();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员");
+					ranger.utils.alertError("操作失败,请联系系统管理员");
 				}
 			});
 		}
@@ -112,18 +112,18 @@ function okFunction(){
 	
 	//TODO: 请根据实际情况编写
 	if($.trim(formData.type)==""){
-		fbidp.utils.alertWarn("类型不能为空，请填写！");
+		ranger.utils.alertWarn("类型不能为空，请填写！");
 		return false;
 	}
 	
 	$.post(varUrl,formData,function(data){
 		if(data.success){
-			fbidp.utils.alertInfo("操作成功！",function(){
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！",function(){
+				ranger.utils.close();
 				query();
 			});
 		}else{
-			fbidp.utils.alertError("操作失败,请联系系统管理员！");
+			ranger.utils.alertError("操作失败,请联系系统管理员！");
 		}
 	},"json");
 

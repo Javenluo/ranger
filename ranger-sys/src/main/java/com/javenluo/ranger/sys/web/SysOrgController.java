@@ -43,7 +43,7 @@ public class SysOrgController extends BaseController {
 
 	@Autowired
 	private SysOrgService sysOrgService;
-	@Value("${fbidp.top.orgCode}")
+	@Value("${ranger.top.orgCode}")
 	private String topOrgCode;
 	
 	/**

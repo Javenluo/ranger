@@ -67,10 +67,10 @@ function add() {
 function edit() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	} else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 
@@ -100,29 +100,29 @@ function edit() {
 function delete_() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}
 	var ids = [];
 	for (var i = 0; i < rows.length; i++) {
 		if(rows[i].childNum > 0){
-			fbidp.utils.alertWarn("该角色下已关联用户，不允许删除！");
+			ranger.utils.alertWarn("该角色下已关联用户，不允许删除！");
 			return;
 		}
 		ids.push(rows[i].id);
 	}
 	
 
-	fbidp.utils.confirm("确定要删除选中的数据吗?", function(r) {
+	ranger.utils.confirm("确定要删除选中的数据吗?", function(r) {
 		if (r) {
 			$.post(ctx + "/sys/sysRole/delete", {ids : ids.join('&')}, function(result) {
 				if (result.success) {
-					fbidp.utils.alertInfo("操作成功！", function() {
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！", function() {
+						ranger.utils.close();
 						query();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}
@@ -146,19 +146,19 @@ function okFunction() {
 		formData.enableFlag = "0";
 	}
 	if ($.trim(formData.code) == "") {
-		fbidp.utils.alertWarn("角色编码不能为空，请填写！");
+		ranger.utils.alertWarn("角色编码不能为空，请填写！");
 		return false;
 	}
 	if ($.trim(formData.name) == "") {
-		fbidp.utils.alertWarn("角色名称不能为空，请填写！");
+		ranger.utils.alertWarn("角色名称不能为空，请填写！");
 		return false;
 	}
 	if ($.trim(formData.orgId) == "") {
-		fbidp.utils.alertWarn("所属机构不能为空，请填写！");
+		ranger.utils.alertWarn("所属机构不能为空，请填写！");
 		return false;
 	}
 	if ($.trim(formData.showOrder) == "") {
-		fbidp.utils.alertWarn("排列顺序不能为空，请填写！");
+		ranger.utils.alertWarn("排列顺序不能为空，请填写！");
 		return false;
 	}
 
@@ -166,12 +166,12 @@ function okFunction() {
 
 	$.post(varUrl, formData, function(data) {
 		if (data.success) {
-			fbidp.utils.alertInfo("操作成功！", function() {
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！", function() {
+				ranger.utils.close();
 				query();
 			});
 		} else {
-			fbidp.utils.alertError("操作失败,请联系系统管理员！");
+			ranger.utils.alertError("操作失败,请联系系统管理员！");
 		}
 	}, "json");
 
@@ -205,16 +205,16 @@ function saveRoleMenu() {
 		menuIds.push(node.id);
 	});
 
-	fbidp.utils.confirm(msg, function(r) {
+	ranger.utils.confirm(msg, function(r) {
 		if (r) {
 			var url = ctx + '/sys/sysRole/saveRoleMenu';
 			$.post(url, {roleId : roleId, menuIds : menuIds.join('&')}, function(data) {
 				if (data.success) {
-					fbidp.utils.alertInfo("操作成功！", function() {
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！", function() {
+						ranger.utils.close();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}
@@ -233,7 +233,7 @@ function resetRoleMenu() {
 function zdcy() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length != 1) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}
 	$("#zdcyForm #roleId").val(rows[0].id);
@@ -299,7 +299,7 @@ function initWxUser() {
 function addRoleUser() {
 	var rows = $("#wxUserTable").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取至少一条数据进行操作！");
+		ranger.utils.alertWarn("请选取至少一条数据进行操作！");
 		return;
 	}
 	var ids = [];
@@ -310,12 +310,12 @@ function addRoleUser() {
 
 	$.post(ctx + "/sys/sysRole/addRoleUser", {roleId : roleId, ids : ids.join('&')}, function(result) {
 		if (result.success) {
-			fbidp.utils.alertInfo("操作成功！", function(index) {
-				fbidp.utils.close(index);
+			ranger.utils.alertInfo("操作成功！", function(index) {
+				ranger.utils.close(index);
 				userQuery();
 			});
 		} else {
-			fbidp.utils.alertError("操作失败,请联系系统管理员！");
+			ranger.utils.alertError("操作失败,请联系系统管理员！");
 		}
 	});
 }
@@ -324,7 +324,7 @@ function addRoleUser() {
 function deleteRoleUser() {
 	var rows = $("#yxUserTable").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取至少一条数据进行操作！");
+		ranger.utils.alertWarn("请选取至少一条数据进行操作！");
 		return;
 	}
 	var ids = [];
@@ -333,16 +333,16 @@ function deleteRoleUser() {
 		ids.push(rows[i].id);
 	}
 
-	fbidp.utils.confirm("确定要移除选中的数据吗?", function(r) {
+	ranger.utils.confirm("确定要移除选中的数据吗?", function(r) {
 		if (r) {
 			$.post(ctx + "/sys/sysRole/deleteRoleUser", {roleId : roleId, ids : ids.join('&')}, function(result) {
 				if (result.success) {
-					fbidp.utils.alertInfo("操作成功！", function(index) {
-						fbidp.utils.close(index);
+					ranger.utils.alertInfo("操作成功！", function(index) {
+						ranger.utils.close(index);
 						userQuery();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员！");
+					ranger.utils.alertError("操作失败,请联系系统管理员！");
 				}
 			});
 		}

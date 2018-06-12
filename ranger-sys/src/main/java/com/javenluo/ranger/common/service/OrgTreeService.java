@@ -35,11 +35,11 @@ import com.javenluo.ranger.sys.utils.UserUtils;
 @Transactional(readOnly = true)
 public class OrgTreeService implements ITreeService {
 
-	@Value("${fbidp.top.orgId}")
+	@Value("${ranger.top.orgId}")
 	private String topOrgId;
-	@Value("${fbidp.top.orgCode}")
+	@Value("${ranger.top.orgCode}")
 	private String topOrgCode;
-	@Value("${fbidp.top.manageOrgCode}")
+	@Value("${ranger.top.manageOrgCode}")
 	private String manageOrgCode;
 	@Autowired
 	private SysOrgService orgService;

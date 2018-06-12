@@ -1,8 +1,6 @@
 package com.javaluo.ranger.rest.authorization.resolvers;
 
 
-import com.javaluo.ranger.rest.authorization.annotation.CurrentUser;
-import com.javaluo.ranger.rest.authorization.interceptor.AuthorizationInterceptor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -11,8 +9,11 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
-import com.foresee.fbidp.sys.entity.SysUser;
-import com.foresee.fbidp.sys.service.SysUserService;
+import com.javaluo.ranger.rest.authorization.annotation.CurrentUser;
+import com.javaluo.ranger.rest.authorization.interceptor.AuthorizationInterceptor;
+import com.javenluo.ranger.sys.entity.SysUser;
+import com.javenluo.ranger.sys.service.SysUserService;
+
 
 /**
  * 增加方法注入，将含有CurrentUser注解的方法参数注入当前登录用户
