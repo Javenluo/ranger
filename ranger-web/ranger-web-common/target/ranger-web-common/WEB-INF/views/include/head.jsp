@@ -28,8 +28,8 @@
 <script src="${ctxStatic}/layer/layer.js"></script>
 <script src="${ctxStatic}/layui/layui.js"></script>
 <script src="${ctxStatic}/laydate-v1.1/laydate/laydate.js"></script>
-<script src="${ctxStatic}/js/fbidp.js"></script>
-<script src="${ctxStatic}/js/fbidp-ui.js"></script>
+<script src="${ctxStatic}/js/ranger.js"></script>
+<script src="${ctxStatic}/js/ranger-ui.js"></script>
 <script src="${ctxStatic}/qrcode/jquery.qrcode.min.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="${ctxStatic}/ueditor/ueditor.config.js"></script>

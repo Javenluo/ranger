@@ -24,7 +24,7 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
-	<bean id="dataSource" class="com.javanluo.ranger.common.dynamicDataSource.RoutingDataSource">
+	<bean id="dataSource" class="com.javenluo.ranger.common.dynamicDataSource.RoutingDataSource">
 		<property name="targetDataSources">
 			<map key-type="com.javenluo.ranger.common.dynamicDataSource.enums.DbType">
 				<entry key="MASTER" value-ref="dataSourceMaster" />

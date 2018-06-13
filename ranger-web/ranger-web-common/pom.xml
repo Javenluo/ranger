@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.javenluo</groupId>
     <artifactId>ranger-web-common</artifactId>
     <packaging>war</packaging>
     <name>ranger-web-common</name>
@@ -23,6 +22,15 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>ranger-web-common</finalName>
+       <finalName>ranger-web-common</finalName>
+	      <plugin>
+	             <groupId>org.apache.maven.plugins</groupId>
+	             <artifactId>maven-compiler-plugin</artifactId>
+	             <version>2.3.2</version>
+	             <configuration>
+	                 <source>1.8</source>
+	                 <target>1.8</target>
+	             </configuration>
+	         </plugin>
     </build>
 </project>

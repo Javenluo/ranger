@@ -56,10 +56,10 @@ function add(){
 function edit(){
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if (rows.length > 1) {
-		fbidp.utils.alertWarn("只能选择一条数据进行操作！");
+		ranger.utils.alertWarn("只能选择一条数据进行操作！");
 		return;
 	}
 	
@@ -91,7 +91,7 @@ function edit(){
 function delete_() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}
 	
@@ -100,16 +100,16 @@ function delete_() {
 		jobNames.push(rows[i].rwmc);
 	}
 	
-	fbidp.utils.confirm("确定要删除选中的数据吗?", function(r) {
+	ranger.utils.confirm("确定要删除选中的数据吗?", function(r) {
 		if (r) {
 			$.post(ctx+"/sys/scheduler/deleteJobs", {jobNames : jobNames.join('&') }, function(result) {
 				if (result.success) {
-					fbidp.utils.alertInfo("操作成功！", function(){
-						fbidp.utils.close();
+					ranger.utils.alertInfo("操作成功！", function(){
+						ranger.utils.close();
 						query();
 					});
 				} else {
-					fbidp.utils.alertError("操作失败,请联系系统管理员");
+					ranger.utils.alertError("操作失败,请联系系统管理员");
 				}
 			});
 		}
@@ -122,20 +122,20 @@ function delete_() {
 function update2resumeJob() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if(rows.length >1){
-		fbidp.utils.alertWarn("每次只可对一条数据进行操作！");
+		ranger.utils.alertWarn("每次只可对一条数据进行操作！");
 		return;
 	}
 	$.post(ctx+"/sys/scheduler/update2resumeJob", {jobName : rows[0].rwmc }, function(result) {
 		if (result.success) {
-			fbidp.utils.alertInfo("操作成功！", function(){
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！", function(){
+				ranger.utils.close();
 				query();
 			});
 		} else {
-			fbidp.utils.alertError("操作失败,请联系系统管理员");
+			ranger.utils.alertError("操作失败,请联系系统管理员");
 		}
 	});
 }
@@ -146,20 +146,20 @@ function update2resumeJob() {
 function update2pauseJob() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if(rows.length >1){
-		fbidp.utils.alertWarn("每次只可对一条数据进行操作！");
+		ranger.utils.alertWarn("每次只可对一条数据进行操作！");
 		return;
 	}
 	$.post(ctx+"/sys/scheduler/update2pauseJob", {jobName : rows[0].rwmc }, function(result) {
 		if (result.success) {
-			fbidp.utils.alertInfo("操作成功！", function(){
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！", function(){
+				ranger.utils.close();
 				query();
 			});
 		} else {
-			fbidp.utils.alertError("操作失败,请联系系统管理员");
+			ranger.utils.alertError("操作失败,请联系系统管理员");
 		}
 	});
 }
@@ -170,20 +170,20 @@ function update2pauseJob() {
 function update2triggerJob() {
 	var rows = $("#tt").datagrid('getSelections');
 	if (rows.length == 0) {
-		fbidp.utils.alertWarn("请选取一条数据进行操作！");
+		ranger.utils.alertWarn("请选取一条数据进行操作！");
 		return;
 	}else if(rows.length >1){
-		fbidp.utils.alertWarn("每次只可对一条数据进行操作！");
+		ranger.utils.alertWarn("每次只可对一条数据进行操作！");
 		return;
 	}
 	$.post(ctx+"/sys/scheduler/update2triggerJob", {jobName : rows[0].rwmc }, function(result) {
 		if (result.success) {
-			fbidp.utils.alertInfo("操作成功！", function(){
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！", function(){
+				ranger.utils.close();
 				query();
 			});
 		} else {
-			fbidp.utils.alertError("操作失败,请联系系统管理员");
+			ranger.utils.alertError("操作失败,请联系系统管理员");
 		}
 	});
 }
@@ -202,26 +202,26 @@ function okFunction(bz){
 	var formData = $("#dialogForm").serializeObject();
 	
 	if($.trim(formData.rwmc)==""){
-		fbidp.utils.alertWarn("任务名称不能为空，请填写！");
+		ranger.utils.alertWarn("任务名称不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.zylm)==""){
-		fbidp.utils.alertWarn("作业类名不能为空，请填写！");
+		ranger.utils.alertWarn("作业类名不能为空，请填写！");
 		return false;
 	}
 	if($.trim(formData.sjbds)==""){
-		fbidp.utils.alertWarn("时间表达式不能为空，请填写！");
+		ranger.utils.alertWarn("时间表达式不能为空，请填写！");
 		return false;
 	}
 	
 	$.post(varUrl,formData,function(data){
 		if(data.success){
-			fbidp.utils.alertInfo("操作成功！",function(){
-				fbidp.utils.close();
+			ranger.utils.alertInfo("操作成功！",function(){
+				ranger.utils.close();
 				query();
 			});
 		}else{
-			fbidp.utils.alertError("操作失败,请联系系统管理员！");
+			ranger.utils.alertError("操作失败,请联系系统管理员！");
 		}
 	},"json");
 

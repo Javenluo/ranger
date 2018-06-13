@@ -14,8 +14,6 @@
         <module>ranger-sys</module>
         <module>ranger-web</module>
         <module>ranger-scheduler</module>
-        <module>ranger-sys</module>
-        <module>ranger-sys</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,7 +61,7 @@
         <jsp-api.version>2.0</jsp-api.version>
         <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
         <jackson-databind.version>2.9.0</jackson-databind.version>
-        <oracle-ojdbc.version>11.2.0.1.0</oracle-ojdbc.version>
+        <oracle-ojdbc.version>11.2.0.3</oracle-ojdbc.version>
         <aspectjrt.version>1.8.11</aspectjrt.version>
         <activiti.version>5.22.0</activiti.version>
     </properties>
@@ -407,7 +405,7 @@
         </plugins>
     </build>
 
-    <repositories>
+    <!-- <repositories>
         <repository>
             <id>Fbidp nexus</id>
             <name>Fbidp nexus Repository</name>
@@ -430,9 +428,9 @@
         <snapshotRepository>
             <id>fbidp-snapshots</id>
             <url>http://gdbszs.test.jchl.com/nexus/content/repositories/snapshots/</url>
-            <!-- 快照版生成唯一版本号 -->
+            快照版生成唯一版本号
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement> -->
 
 </project>
