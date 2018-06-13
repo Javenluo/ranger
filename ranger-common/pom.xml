@@ -12,7 +12,7 @@
     <artifactId>ranger-common</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>ranger-comon-ssm</module>
+        <module>ranger-common-ssm</module>
         <module>ranger-common-security</module>
     </modules>
 
